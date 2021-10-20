@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello World</title>
+
+    <script src="./dist/bundle.js" defer></script>
+
+    <style>
+      :root {
+        font-size: 15px;
+      }
+
+      body {
+        padding: 100vh 0;
+        font-family: Helvetica;
+      }
+
+      h1 {
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        font-size: 5rem;
+        color: var(--color);
+      }
+
+      span {
+        display: inline-block;
+        transform: translateX(calc(var(--move) * 1px));
+      }
+    </style>
+  </head>
+  <body>
+    <h1
+      tg-name="color"
+      tg-only="0,2,4,6,8"
+      tg-project="0: black; 2: red; 4: yellow; 6: blue; 8: purple"
+      tg-from="0"
+      tg-to="10"
+      tg-steps="10"
+    >
+      <span
+        tg-name="move"
+        tg-from="300"
+        tg-to="-300"
+        tg-step="0.1"
+        tg-project
+        tg-only
+        >Hello World</span
+      >
+    </h1>
+  </body>
+</html>
