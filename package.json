@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stevenlei/triggerjs.git"
+    "url": "git+https://github.com/triggerjs/trigger.git"
   },
   "author": "Steven Lei",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/stevenlei/triggerjs/issues"
+    "url": "https://github.com/triggerjs/trigger/issues"
   },
-  "homepage": "https://github.com/stevenlei/triggerjs#readme",
+  "homepage": "https://github.com/triggerjs/trigger#readme",
   "devDependencies": {
     "@babel/core": "^7.15.8",
     "@babel/preset-env": "^7.15.8",
