@@ -1,6 +1,6 @@
 {
   "name": "@triggerjs/trigger",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Getting DOM Elements' relative position with CSS variable when page scroll. With projection support for values, it is easy to create scroll-to-position animation like a playback.",
   "main": "index.js",
   "scripts": {
