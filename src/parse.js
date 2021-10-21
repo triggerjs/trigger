@@ -88,7 +88,7 @@ export function parseValues(elements) {
       value = Math.min(Math.max(mappingValue, to), from);
     }
 
-    if (only.length > 0 && !only.includes(value) && lastValue !== null) {
+    if (only.length > 0 && !only.includes(value)) {
       return;
     }
 
