@@ -16,7 +16,12 @@ export function extractValues(element, directive) {
 
   let targetElement = selfOrInheritFromParent(element, directive);
 
-  return directives[directive].get(targetElement.getAttribute(directive));
+  // In order to know whether the attribute present or not
+  let value = targetElement.hasAttribute(directive)
+    ? targetElement.getAttribute(directive)
+    : null;
+
+  return directives[directive].get(value);
 }
 
 // Find the target element to get the value, is it from self, or inherit from parents?
