@@ -26,6 +26,16 @@ function eventListeners() {
   window.addEventListener("DOMContentLoaded", () => {
     // Find all [tg-name] elements
     bind(ob);
+
+    setTimeout(() => {
+      // Run once on start, so that correct style will be set before scroll happens
+      let allElements = [...document.querySelectorAll("[tg-name]")].map(
+        (element) => {
+          return parseAttributes(element);
+        }
+      );
+      parseValues(allElements);
+    });
   });
 
   // Re-bind if resize occurs

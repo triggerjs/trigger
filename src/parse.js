@@ -78,7 +78,7 @@ export function parseValues(elements) {
       value = Math.min(Math.max(projectedValue, to), from);
     }
 
-    if (only.length > 0 && !only.includes(value)) {
+    if (only.length > 0 && !only.includes(value) && lastValue !== null) {
       return;
     }
 
