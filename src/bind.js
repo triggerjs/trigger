@@ -6,7 +6,7 @@ export default function (observer, hook) {
   document.querySelectorAll("[tg-name]").forEach((element) => {
     let { top, height } = element.getBoundingClientRect();
 
-    element.style.setProperty("--tg-top", top);
+    element.style.setProperty("--tg-top", top + window.scrollY);
     element.style.setProperty("--tg-height", height);
 
     observer.observe(element);
