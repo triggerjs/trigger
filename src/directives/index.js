@@ -6,6 +6,7 @@ let directives = {
   "tg-step": require("./tg-step"),
   "tg-map": require("./tg-map"),
   "tg-only": require("./tg-only"),
+  "tg-edge": require("./tg-edge"),
 };
 
 // Extract the value of tg element

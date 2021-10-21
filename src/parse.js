@@ -14,6 +14,7 @@ export function parseAttributes(element) {
   let step = extractValues(element, "tg-step");
   let mapping = extractValues(element, "tg-map");
   let only = extractValues(element, "tg-only");
+  let edge = extractValues(element, "tg-edge");
 
   let range = Math.abs(to - from);
   let increment = step === 0 ? range / steps : step;
@@ -32,6 +33,7 @@ export function parseAttributes(element) {
     step,
     mapping,
     only,
+    edge,
     range,
     increment,
     segments,
@@ -60,10 +62,18 @@ export function parseValues(elements) {
       to,
       mapping,
       only,
+      edge,
       lastValue,
     } = element;
 
+    // edge = cover by default
     let percentage = (scrolled - top + clientHeight) / (clientHeight + height);
+
+    // edge = inset
+    if (edge === "inset") {
+      percentage =
+        (scrolled - top + clientHeight - height) / (clientHeight - height);
+    }
 
     let value;
 
