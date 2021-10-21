@@ -4,7 +4,7 @@ let directives = {
   "tg-to": require("./tg-to"),
   "tg-steps": require("./tg-steps"),
   "tg-step": require("./tg-step"),
-  "tg-project": require("./tg-project"),
+  "tg-map": require("./tg-map"),
   "tg-only": require("./tg-only"),
 };
 

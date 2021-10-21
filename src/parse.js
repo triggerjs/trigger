@@ -12,7 +12,7 @@ export function parseAttributes(element) {
   let to = extractValues(element, "tg-to");
   let steps = extractValues(element, "tg-steps");
   let step = extractValues(element, "tg-step");
-  let projected = extractValues(element, "tg-project");
+  let mapping = extractValues(element, "tg-map");
   let only = extractValues(element, "tg-only");
 
   let range = Math.abs(to - from);
@@ -30,7 +30,7 @@ export function parseAttributes(element) {
     to,
     steps,
     step,
-    projected,
+    mapping,
     only,
     range,
     increment,
@@ -58,7 +58,7 @@ export function parseValues(elements) {
       name,
       from,
       to,
-      projected,
+      mapping,
       only,
       lastValue,
     } = element;
@@ -67,23 +67,23 @@ export function parseValues(elements) {
 
     let value;
 
-    let projectedValue = (
+    let mappingValue = (
       from +
       Math.floor((segments + 1) * percentage) * increment * multiplier
     ).toFixed(decimals);
 
     if (multiplier === 1) {
-      value = Math.min(Math.max(projectedValue, from), to);
+      value = Math.min(Math.max(mappingValue, from), to);
     } else {
-      value = Math.min(Math.max(projectedValue, to), from);
+      value = Math.min(Math.max(mappingValue, to), from);
     }
 
     if (only.length > 0 && !only.includes(value) && lastValue !== null) {
       return;
     }
 
-    if (typeof projected[value] !== "undefined") {
-      value = projected[value];
+    if (typeof mapping[value] !== "undefined") {
+      value = mapping[value];
     }
 
     if (lastValue != value) {
