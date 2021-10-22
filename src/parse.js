@@ -20,7 +20,7 @@ export function parseAttributes(element) {
   let steps = extractValues(actualElement, "tg-steps");
   let step = extractValues(actualElement, "tg-step");
   let mapping = extractValues(element, "tg-map");
-  let only = extractValues(element, "tg-only");
+  let filtered = extractValues(element, "tg-filter");
   let edge = extractValues(actualElement, "tg-edge");
 
   let range = Math.abs(to - from);
@@ -39,7 +39,7 @@ export function parseAttributes(element) {
     steps,
     step,
     mapping,
-    only,
+    filtered,
     edge,
     range,
     increment,
@@ -68,7 +68,7 @@ export function parseValues(elements) {
       from,
       to,
       mapping,
-      only,
+      filtered,
       edge,
       lastValue,
     } = element;
@@ -95,7 +95,7 @@ export function parseValues(elements) {
       value = Math.min(Math.max(mappingValue, to), from);
     }
 
-    if (only.length > 0 && !only.includes(value)) {
+    if (filtered.length > 0 && !filtered.includes(value)) {
       return;
     }
 

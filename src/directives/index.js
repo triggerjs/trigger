@@ -7,7 +7,7 @@ let directives = {
   "tg-steps": require("./tg-steps"),
   "tg-step": require("./tg-step"),
   "tg-map": require("./tg-map"),
-  "tg-only": require("./tg-only"),
+  "tg-filter": require("./tg-filter"),
   "tg-edge": require("./tg-edge"),
   "tg-follow": require("./tg-follow"),
   "tg-ref": require("./tg-ref"),

@@ -42,16 +42,16 @@ In the above example, CSS variable `--scrolled` will be available to `#greeting`
 
 ## The `tg-` Attributes
 
-| Attribute  | Type     | Default | Description                                                                                                                                                                                                                                   |
-| ---------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `tg-name`  | Required | -       | The CSS variable name to store the value, with or without `--` prefix.                                                                                                                                                                        |
-| `tg-from`  | Optional | `0`     | The start value                                                                                                                                                                                                                               |
-| `tg-to`    | Optional | `1`     | The end value                                                                                                                                                                                                                                 |
-| `tg-steps` | Optional | `100`   | How many steps between `tg-from` and `tg-to`                                                                                                                                                                                                  |
-| `tg-step`  | Optional | `0`     | Step per increment, if this value is other than `0`, will override `tg-steps`.                                                                                                                                                                |
-| `tg-map`   | Optional | (Empty) | map the value to another value. Format: `value: newValue; value2: newValue2`. Multiple values map to one value is also supported: `value,value2,value3: newValue`                                                                             |
-| `tg-only`  | Optional | (Empty) | Only trigger if the scroll value is on the list. Format: `1,3,5,7,9`                                                                                                                                                                          |
-| `tg-edge`  | Optional | cover   | When should the calculation starts. `cover` means off-screen to off-screen, the calculation begins right on the element appear; `inset` means the calculation begins after the whole element appears on screen, ends right before off-screen. |
+| Attribute   | Type     | Default | Description                                                                                                                                                                                                                                   |
+| ----------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tg-name`   | Required | -       | The CSS variable name to store the value, with or without `--` prefix.                                                                                                                                                                        |
+| `tg-from`   | Optional | `0`     | The start value                                                                                                                                                                                                                               |
+| `tg-to`     | Optional | `1`     | The end value                                                                                                                                                                                                                                 |
+| `tg-steps`  | Optional | `100`   | How many steps between `tg-from` and `tg-to`                                                                                                                                                                                                  |
+| `tg-step`   | Optional | `0`     | Step per increment, if this value is other than `0`, will override `tg-steps`.                                                                                                                                                                |
+| `tg-map`    | Optional | (Empty) | map the value to another value. Format: `value: newValue; value2: newValue2`. Multiple values map to one value is also supported: `value,value2,value3: newValue`                                                                             |
+| `tg-filter` | Optional | (Empty) | Only trigger if the scroll value is on the list. Format: `1,3,5,7,9`                                                                                                                                                                          |
+| `tg-edge`   | Optional | cover   | When should the calculation starts. `cover` means off-screen to off-screen, the calculation begins right on the element appear; `inset` means the calculation begins after the whole element appears on screen, ends right before off-screen. |
 
 ## Value Mapping
 
@@ -102,7 +102,7 @@ But sometimes, we do not want to do the math by ourselves, that's why `tg-step` 
 
 ## Noise Reduction
 
-Sometimes we only interested in certain values. For example, we only want to know when `25, 50, 75` happens from `0` to `100` (`tg-from="0"` and `tg-to="100"`). In this situation, `tg-only` takes part.
+Sometimes we only interested in certain values. For example, we only want to know when `25, 50, 75` happens from `0` to `100` (`tg-from="0"` and `tg-to="100"`). In this situation, `tg-filter` takes part.
 
 ```html
 <h1
@@ -111,7 +111,7 @@ Sometimes we only interested in certain values. For example, we only want to kno
   tg-from="0"
   tg-to="100"
   tg-step="1"
-  tg-only="25,50,75"
+  tg-filter="25,50,75"
   tg-map="25: red; 50: yellow; 75: green"
 >
   Red (25), Yellow (50), Green (75)
