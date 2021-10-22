@@ -73,6 +73,11 @@ export function parseValues(elements) {
       lastValue,
     } = element;
 
+    // If the name is equal to '_' (--_), skip
+    if (name === "--_") {
+      return;
+    }
+
     // edge = cover by default
     let percentage = (scrolled - top + clientHeight) / (clientHeight + height);
 
