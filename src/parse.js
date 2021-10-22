@@ -20,7 +20,7 @@ export function parseAttributes(element) {
   let steps = extractValues(actualElement, "tg-steps");
   let step = extractValues(actualElement, "tg-step");
   let mapping = extractValues(element, "tg-map");
-  let filtered = extractValues(element, "tg-filter");
+  let filter = extractValues(element, "tg-filter");
   let edge = extractValues(actualElement, "tg-edge");
 
   let range = Math.abs(to - from);
@@ -39,7 +39,7 @@ export function parseAttributes(element) {
     steps,
     step,
     mapping,
-    filtered,
+    filter,
     edge,
     range,
     increment,
@@ -68,7 +68,7 @@ export function parseValues(elements) {
       from,
       to,
       mapping,
-      filtered,
+      filter,
       edge,
       lastValue,
     } = element;
@@ -95,7 +95,13 @@ export function parseValues(elements) {
       value = Math.min(Math.max(mappingValue, to), from);
     }
 
-    if (filtered.length > 0 && !filtered.includes(value)) {
+    if (filter.values.length > 0 && !filter.values.includes(value)) {
+      // If the mode is 'exact', remove the CSS property
+      // Setting the lastValue to null to ensure correct comparison below
+      if (filter.mode === "exact") {
+        element.lastValue = null;
+        el.style.removeProperty(name);
+      }
       return;
     }
 
