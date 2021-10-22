@@ -1,3 +1,5 @@
+const SHOULD_NOT_INHERIT_DIRECTIVES = ["tg-follow", "tg-ref"];
+
 let directives = {
   "tg-name": require("./tg-name"),
   "tg-from": require("./tg-from"),
@@ -7,6 +9,8 @@ let directives = {
   "tg-map": require("./tg-map"),
   "tg-only": require("./tg-only"),
   "tg-edge": require("./tg-edge"),
+  "tg-follow": require("./tg-follow"),
+  "tg-ref": require("./tg-ref"),
 };
 
 // Extract the value of tg element
@@ -28,7 +32,10 @@ export function extractValues(element, directive) {
 // Find the target element to get the value, is it from self, or inherit from parents?
 function selfOrInheritFromParent(el, directive) {
   // If the current element has already been set the directive
-  if (el.hasAttribute(directive)) {
+  if (
+    el.hasAttribute(directive) ||
+    SHOULD_NOT_INHERIT_DIRECTIVES.includes(directive)
+  ) {
     return el;
   }
 

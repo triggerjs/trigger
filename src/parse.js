@@ -3,18 +3,25 @@ import { extractValues } from "./directives";
 
 // This function will be called in observe stage, caching those values into an object for ease of use in scroll event.
 export function parseAttributes(element) {
-  let style = getComputedStyle(element);
+  let follow = extractValues(element, "tg-follow");
+  let actualElement = element;
+
+  if (follow !== null) {
+    actualElement = follow;
+  }
+
+  let style = getComputedStyle(actualElement);
   let top = Number(style.getPropertyValue("--tg-top"));
   let height = Number(style.getPropertyValue("--tg-height"));
 
   let name = extractValues(element, "tg-name");
-  let from = extractValues(element, "tg-from");
-  let to = extractValues(element, "tg-to");
-  let steps = extractValues(element, "tg-steps");
-  let step = extractValues(element, "tg-step");
+  let from = extractValues(actualElement, "tg-from");
+  let to = extractValues(actualElement, "tg-to");
+  let steps = extractValues(actualElement, "tg-steps");
+  let step = extractValues(actualElement, "tg-step");
   let mapping = extractValues(element, "tg-map");
   let only = extractValues(element, "tg-only");
-  let edge = extractValues(element, "tg-edge");
+  let edge = extractValues(actualElement, "tg-edge");
 
   let range = Math.abs(to - from);
   let increment = step === 0 ? range / steps : step;
