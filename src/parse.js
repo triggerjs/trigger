@@ -1,9 +1,10 @@
 import { decimalsLength } from "./helpers";
 import { extractValues } from "./directives";
+import { getPrefix } from "./prefix";
 
 // This function will be called in observe stage, caching those values into an object for ease of use in scroll event.
 export function parseAttributes(element) {
-  let follow = extractValues(element, "tg-follow");
+  let follow = extractValues(element, `${getPrefix()}follow`);
   let actualElement = element;
 
   if (follow !== null) {
@@ -14,14 +15,14 @@ export function parseAttributes(element) {
   let top = Number(style.getPropertyValue("--tg-top"));
   let height = Number(style.getPropertyValue("--tg-height"));
 
-  let name = extractValues(element, "tg-name");
-  let from = extractValues(actualElement, "tg-from");
-  let to = extractValues(actualElement, "tg-to");
-  let steps = extractValues(actualElement, "tg-steps");
-  let step = extractValues(actualElement, "tg-step");
-  let mapping = extractValues(element, "tg-map");
-  let filter = extractValues(element, "tg-filter");
-  let edge = extractValues(actualElement, "tg-edge");
+  let name = extractValues(element, `${getPrefix()}name`);
+  let from = extractValues(actualElement, `${getPrefix()}from`);
+  let to = extractValues(actualElement, `${getPrefix()}to`);
+  let steps = extractValues(actualElement, `${getPrefix()}steps`);
+  let step = extractValues(actualElement, `${getPrefix()}step`);
+  let mapping = extractValues(element, `${getPrefix()}map`);
+  let filter = extractValues(element, `${getPrefix()}filter`);
+  let edge = extractValues(actualElement, `${getPrefix()}edge`);
 
   let range = Math.abs(to - from);
   let increment = step === 0 ? range / steps : step;

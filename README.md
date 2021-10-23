@@ -242,6 +242,18 @@ We can also listen to the `tg` event on an element with JavaScript:
 </script>
 ```
 
+## Customising the Prefix
+
+In case you are concerning about the `tg-` prefix that is not quite fulfill the standard of HTML5, it can be customised by the following setting in the `body` tag with `data-trigger-prefix` attribute:
+
+```html
+<body data-trigger-prefix="data-tg">
+  <div data-tg-name="scrolled" id="greeting">Hello, World</div>
+</body>
+```
+
+The above example customised the prefix to `data-tg`. `data-*` is a completely valid attribute for putting custom data in HTML5.
+
 ## Contribute
 
 Feel free to fork this repository and submit pull requests. Discussions will be in GitHub Issues.

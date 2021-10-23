@@ -1,9 +1,12 @@
+import { getPrefixSetting, getPrefix } from "./prefix";
 import observer from "./observer";
 import bind from "./bind";
 import { parseAttributes, parseValues } from "./parse";
 
 let activeElements = []; // Store the elements observed by IntersectionObserver
 let ob; // Store the observer instance
+
+getPrefixSetting(); // Get the customised prefix setting if available
 
 function observeElements() {
   ob = observer((entries) => {
@@ -29,11 +32,11 @@ function eventListeners() {
 
     setTimeout(() => {
       // Run once on start, so that correct style will be set before scroll happens
-      let allElements = [...document.querySelectorAll("[tg-name]")].map(
-        (element) => {
-          return parseAttributes(element);
-        }
-      );
+      let allElements = [
+        ...document.querySelectorAll(`[${getPrefix()}name]`),
+      ].map((element) => {
+        return parseAttributes(element);
+      });
       parseValues(allElements);
     });
   });

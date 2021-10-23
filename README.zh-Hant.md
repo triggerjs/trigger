@@ -241,6 +241,18 @@
 </script>
 ```
 
+## 自定義前綴
+
+假如你擔心 `tg-` 前綴可能不符合 HTML 5 的標準，可以透過在 `body` 標籤中加入 `data-trigger-prefix` 去自定義它：
+
+```html
+<body data-trigger-prefix="data-tg">
+  <div data-tg-name="scrolled" id="greeting">Hello, World</div>
+</body>
+```
+
+上述例子中將前綴自定義為 `data-tg`。`data-*` 是完全符合 HTML5 標準的屬性，用於設置自定義的屬性和設定值。
+
 ## 參與開發
 
 歡迎 Fork 這個 Repo 進行開發，並提交 Pull Requests。我們會在 GitHub Issues 中進行討論。
