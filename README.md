@@ -2,7 +2,7 @@
 
 Getting DOM Elements' relative position with CSS variable when page scroll. With mapping support for values, it is easy to create scroll-to-position animation like video playback.
 
-Read this article in other languages: [English](README.md), [繁體中文](README.zh-Hant.md), [简体中文](README.zh-Hans.md).
+Read this document in other languages: [English](README.md), [繁體中文](README.zh-Hant.md), [简体中文](README.zh-Hans.md).
 
 ## Introduction
 
@@ -42,16 +42,18 @@ In the above example, CSS variable `--scrolled` will be available to `#greeting`
 
 ## The `tg-` Attributes
 
-| Attribute   | Type     | Default | Description                                                                                                                                                                                                                                   |
-| ----------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `tg-name`   | Required | -       | The CSS variable name to store the value, with or without `--` prefix.                                                                                                                                                                        |
-| `tg-from`   | Optional | `0`     | The start value                                                                                                                                                                                                                               |
-| `tg-to`     | Optional | `1`     | The end value                                                                                                                                                                                                                                 |
-| `tg-steps`  | Optional | `100`   | How many steps between `tg-from` and `tg-to`                                                                                                                                                                                                  |
-| `tg-step`   | Optional | `0`     | Step per increment, if this value is other than `0`, will override `tg-steps`.                                                                                                                                                                |
-| `tg-map`    | Optional | (Empty) | map the value to another value. Format: `value: newValue; value2: newValue2`. Multiple values map to one value is also supported: `value,value2,value3: newValue`                                                                             |
-| `tg-filter` | Optional | (Empty) | Only trigger if the scroll value is on the list. Format: `1,3,5,7,9`                                                                                                                                                                          |
-| `tg-edge`   | Optional | cover   | When should the calculation starts. `cover` means off-screen to off-screen, the calculation begins right on the element appear; `inset` means the calculation begins after the whole element appears on screen, ends right before off-screen. |
+| Attribute   | Type     | Default | Description                                                                                                                                                                                                                                                           |
+| ----------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tg-name`   | Required | -       | The CSS variable name to store the value, with or without `--` prefix.                                                                                                                                                                                                |
+| `tg-from`   | Optional | `0`     | The start value                                                                                                                                                                                                                                                       |
+| `tg-to`     | Optional | `1`     | The end value                                                                                                                                                                                                                                                         |
+| `tg-steps`  | Optional | `100`   | How many steps between `tg-from` and `tg-to`                                                                                                                                                                                                                          |
+| `tg-step`   | Optional | `0`     | Step per increment, if this value is other than `0`, will override `tg-steps`.                                                                                                                                                                                        |
+| `tg-map`    | Optional | (Empty) | map the value to another value. Format: `value: newValue; value2: newValue2`. Multiple values map to one value is also supported: `value,value2,value3: newValue`                                                                                                     |
+| `tg-filter` | Optional | (Empty) | Only trigger if the scroll value is on the list. Format: `1,3,5,7,9`. By default, the filter mode is `retain`, if we want to switch the mode to `exact`, add an `!` at the end. Read more about this in a dedicated section below.                                    |
+| `tg-edge`   | Optional | cover   | When should the calculation starts. `cover` means off-screen to off-screen, the calculation begins right on the element appear; `inset` means the calculation begins after the whole element appears on screen, ends right before off-screen.                         |
+| `tg-follow` | Optional | (Empty) | Use the calculation result from another element instead. The value of `tg-follow` is the value of the target element's `tg-ref`. **Important**: When `tg-follow` is set, `tg-from`, `tg-to`, `tg-steps`, `tg-step` and `tg-edge` will be ignored in the same element. |
+| `tg-ref`    | Optional | (Empty) | Define the name that can be referenced (followed) by another element using `tg-follow`.                                                                                                                                                                               |
 
 ## Value Mapping
 
@@ -127,6 +129,73 @@ Sometimes we only interested in certain values. For example, we only want to kno
   }
 </style>
 ```
+
+## The mode of `tg-filter`
+
+There are two modes for `tg-filter`, `retain` by default, the other one is `exact`. Let's use an example to clarify this:
+
+```html
+<h1
+  id="heading"
+  tg-name="color"
+  tg-from="0"
+  tg-to="10"
+  tg-step="1"
+  tg-filter="5"
+  tg-map="5: blue"
+>
+  Trigger.js
+</h1>
+
+<style>
+  body {
+    padding: 100vh 0; /* In order to make the page have enough rooms for scrolling */
+  }
+
+  #heading {
+    --color: black;
+    color: var(--color);
+  }
+</style>
+```
+
+In the above example, the text has an initial color of black, and it will turn blue when it arrives at the middle of the page and never turn black again because there is nothing to trigger the black color.
+
+So let's say we want the text color becomes blue only when the calculation value is `5`, and becomes black for other values, We can change it to:
+
+```html
+<h1
+  id="heading"
+  tg-name="color"
+  tg-from="0"
+  tg-to="10"
+  tg-step="1"
+  tg-filter="4,5,6"
+  tg-map="4: black; 5: blue; 6: black"
+>
+  Trigger.js
+</h1>
+```
+
+This works, but the code becomes redundant quickly. To solve this, we can switch the filter mode to `exact` by adding an `!` at the end of `tg-filter`:
+
+```html
+<h1
+  id="heading"
+  tg-name="color"
+  tg-from="0"
+  tg-to="10"
+  tg-step="1"
+  tg-filter="5!"
+  tg-map="5: blue"
+>
+  Trigger.js
+</h1>
+```
+
+In `exact` mode, `--color` becomes `blue` when the value is `5`, and becomes the default when the value is other than `5`.
+
+The design by adding an `!` directly to `tg-filter` is that this requirement should only happen when `tg-filter` is used. Separating to yet another attribute should not be necessary and might cause misunderstanding.
 
 ## Value Inheritance
 
