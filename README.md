@@ -1,12 +1,12 @@
 # Trigger JS
 
-Getting DOM Elements' relative position with CSS variable when page scroll. With mapping support for values, it is easy to create scroll-to-position animation like video playback.
+Get the desired value with CSS variable on page scroll for your animation need, without writing a single line of JavaScript code.
+
+Sometimes we want to create an animation or update the CSS style of an HTML element based on the scroll position, just like playing a video forward and backward by scrolling up and down.
+
+Initially, it was just a number from 0 to 1 when the element appears from the bottom and disappears from the top. However, it is way too simple for various of animation needs, hence the range can be configured on a per-element basis. But numbers don't always work, with mapping and filtering support, we can map a number to a color or something else, for us to use it in CSS directly. Checkout some [examples here](https://codepen.io/collection/eJmoMr).
 
 Read this document in other languages: [English](README.md), [繁體中文](README.zh-Hant.md), [简体中文](README.zh-Hans.md).
-
-## Introduction
-
-Sometimes we want to create an animation or update the style of a DOM element based on the scroll position of a page, and it should also support playing forward and backwards when the page scroll down and up, just like a video playback.
 
 ## Getting Started
 
