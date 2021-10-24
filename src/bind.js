@@ -1,8 +1,15 @@
 import { getPrefix } from "./prefix";
 
-export default function (observer, hook) {
+/**
+ * add observer
+ * @param {IntersectionObserver} observer 
+ * @param {object} hook 
+ * @param {() => void} [hook.before]
+ * @param {() => void} [hook.after]
+ */
+export default function (observer, hook = {}) {
   // Before Hook
-  typeof hook === "object" && typeof before === "function" && before();
+  hook.before?.();
 
   // Fetch all DOM elements with [tg-name] attribute and set the current top & left offset
   document.querySelectorAll(`[${getPrefix()}name]`).forEach((element) => {
@@ -15,5 +22,5 @@ export default function (observer, hook) {
   });
 
   // After Hook
-  typeof hook === "object" && typeof after === "function" && after();
+  hook.after?.();
 }
