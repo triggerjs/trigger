@@ -49,6 +49,8 @@ function eventListeners() {
         activeElements.forEach((element) => {
           ob.unobserve(element.el);
         });
+        // Clean up activeElements
+        activeElements = []
       },
     });
   });
