@@ -6,7 +6,16 @@ const SHOULD_NOT_INHERIT_DIRECTIVES = [`tg-follow`, `tg-ref`];
 // (require('...') run at webpack build time)
 // so we have to use tg- here as key first
 // and deal with custom prefix later
-let directives = {
+// 定义directive对象
+let directives = {}
+const importDir = require.context('./', false, /tg-[\S]+\.js$/)
+importDir.keys().map((key)=>{
+  let formatKey = key.match(/tg-[^.]+/)[0];
+  directives[formatKey] = importDir(key);
+})
+/**
+ * 不用写这么多引入了
+let dirs = {
   "tg-name": require("./tg-name"),
   "tg-from": require("./tg-from"),
   "tg-to": require("./tg-to"),
@@ -18,6 +27,7 @@ let directives = {
   "tg-follow": require("./tg-follow"),
   "tg-ref": require("./tg-ref"),
 };
+ */
 
 // Extract the value of tg element
 export function extractValues(element, directive) {
