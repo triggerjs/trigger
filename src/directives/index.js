@@ -6,18 +6,16 @@ const SHOULD_NOT_INHERIT_DIRECTIVES = [`tg-follow`, `tg-ref`];
 // (require('...') run at webpack build time)
 // so we have to use tg- here as key first
 // and deal with custom prefix later
-let directives = {
-  "tg-name": require("./tg-name"),
-  "tg-from": require("./tg-from"),
-  "tg-to": require("./tg-to"),
-  "tg-steps": require("./tg-steps"),
-  "tg-step": require("./tg-step"),
-  "tg-map": require("./tg-map"),
-  "tg-filter": require("./tg-filter"),
-  "tg-edge": require("./tg-edge"),
-  "tg-follow": require("./tg-follow"),
-  "tg-ref": require("./tg-ref"),
-};
+
+// Declare Object directives
+let directives = {};
+
+// Load all the directives
+const importDir = require.context("./", false, /tg-[\S]+\.js$/);
+importDir.keys().map((key) => {
+  let formatKey = key.match(/tg-[^.]+/)[0];
+  directives[formatKey] = importDir(key);
+});
 
 // Extract the value of tg element
 export function extractValues(element, directive) {
@@ -40,9 +38,7 @@ export function extractValues(element, directive) {
   let targetElement = selfOrInheritFromParent(element, directive, directiveKey);
 
   // In order to know whether the attribute present or not
-  let value = targetElement.hasAttribute(directive)
-    ? targetElement.getAttribute(directive)
-    : null;
+  let value = targetElement.hasAttribute(directive) ? targetElement.getAttribute(directive) : null;
 
   return directives[directiveKey].get(value);
 }
@@ -50,10 +46,7 @@ export function extractValues(element, directive) {
 // Find the target element to get the value, is it from self, or inherit from parents?
 function selfOrInheritFromParent(el, directive, directiveKey) {
   // If the current element has already been set the directive
-  if (
-    el.hasAttribute(directive) ||
-    SHOULD_NOT_INHERIT_DIRECTIVES.includes(directiveKey)
-  ) {
+  if (el.hasAttribute(directive) || SHOULD_NOT_INHERIT_DIRECTIVES.includes(directiveKey)) {
     return el;
   }
 
