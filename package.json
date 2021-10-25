@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --mode development",
     "prod": "webpack --mode production",
-    "watch": "webpack --watch --mode development"
+    "watch": "webpack --watch --mode development",
+    "format": "prettier --write '**/*.{ts,tsx,js,jsx,json,.md}'"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,12 @@
   "devDependencies": {
     "@babel/core": "^7.15.8",
     "@babel/preset-env": "^7.15.8",
+    "@babel/preset-typescript": "^7.15.0",
+    "@types/webpack-env": "^1.16.3",
     "babel-loader": "^8.2.2",
+    "fork-ts-checker-webpack-plugin": "^6.4.0",
+    "prettier": "^2.4.1",
+    "typescript": "^4.4.4",
     "webpack": "^5.59.0",
     "webpack-cli": "^4.9.1"
   },
