@@ -84,8 +84,7 @@ export function parseValues(elements) {
 
     // edge = inset
     if (edge === "inset") {
-      percentage =
-        (scrolled - top + clientHeight - height) / (clientHeight - height);
+      percentage = (scrolled - top) / clientHeight;
     }
 
     let value;
