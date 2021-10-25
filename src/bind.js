@@ -1,6 +1,6 @@
 import { getPrefix } from "./prefix";
 
-export default function (observer, hook = {}) {
+export default function (observer, hook) {
   // Before Hook
   hook && typeof hook.before === "function" && hook.before();
 
