@@ -4,52 +4,58 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello World</title>
+    <title>Hello.</title>
 
     <script src="./dist/bundle.js" defer></script>
 
     <style>
       :root {
-        font-size: 15px;
+        font-family: Helvetica; sans-serif;
+        font-size: 20px;
+        --blur: 100;
+        --opacity: 0;
       }
 
       body {
-        padding: 100vh 0;
-        font-family: Helvetica;
+        padding: 0;
+        margin: 0;
       }
 
-      h1 {
-        text-align: center;
-        margin: 0;
-        padding: 0;
-        font-size: 5rem;
-        color: var(--color);
+      .container {
+        height: 200vh;
+      }
+
+      .sticky {
+        font-size: 10rem;
+        font-weight: bold;
+        letter-spacing: -0.03em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        position: sticky;
+        top: 0;
+        filter: blur(calc(var(--blur) * 1px));
       }
 
       span {
-        display: inline-block;
-        transform: translateX(calc(var(--move) * 1px));
+        opacity: var(--opacity);
       }
     </style>
   </head>
   <body>
-    <h1
-      tg-name="color"
-      tg-filter="0,2,4,6,8"
-      tg-map="0: black; 2: red; 4: yellow; 6: blue; 8: purple"
-      tg-from="0"
-      tg-to="10"
-      tg-steps="10"
+    <div
+      class="container"
+      tg-name="blur"
+      tg-from="100"
+      tg-to="0"
+      tg-edge="inset"
     >
-      <span
-        tg-name="move"
-        tg-from="300"
-        tg-to="-300"
-        tg-step="0.1"
-        tg-map
-        tg-filter
-        >Hello World</span
-      >
-    </h1>
+      <div class="container" tg-name="opacity" tg-from="0" tg-to="1">
+        <div class="sticky">
+          <span>Hello.</span>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
