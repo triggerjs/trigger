@@ -198,7 +198,7 @@
 
 ## 繼承
 
-就像一些 CSS 屬性一樣，`tg-` 屬性的值會繼承自父級元素（如果當前元素沒有設定的話）。如果不希望繼承父級元素的值，並設定為預設值的話，只需增加沒有值的 `tg-` 屬性即可。例如：
+就像一些 CSS 屬性一樣，`tg-` 屬性（除了 `tg-follow`，`tg-ref`）的值會繼承自父級元素（如果當前元素沒有設定的話）。如果不希望繼承父級元素的值，並設定為預設值的話，只需增加沒有值的 `tg-` 屬性即可。例如：
 
 ```html
 <div tg-name="scale" tg-from="0" tg-to="50">
@@ -207,6 +207,14 @@
   </span>
 </div>
 ```
+
+## `tg-edge` 圖解
+
+`cover`（預設值）和 `edge` 的分別如下圖所示：
+
+![](/readme-assets/tg-edge-explaination.png)
+
+所以當 `tg-edge="inset"`，元素的高度必須大於瀏覽器視窗（`window.clientHeight`）的高度。
 
 ## JavaScript 事件
 

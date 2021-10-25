@@ -199,7 +199,7 @@ The design by adding an `!` directly to `tg-filter` is that this requirement sho
 
 ## Value Inheritance
 
-Just like some CSS properties, the values of `tg-` attributes are inherit from parents if not being set in the current element. If we do not want to inherit from parent and set it as default value, just add the `tg-` attribute without value. For example:
+Just like some CSS properties, the values of `tg-` attributes (except `tg-follow`, `tg-ref`) are inherited from parents if not being set in the current element. If we do not want to inherit from parent and set it as default value, just add the `tg-` attribute without value. For example:
 
 ```html
 <div tg-name="scale" tg-from="0" tg-to="50">
@@ -208,6 +208,14 @@ Just like some CSS properties, the values of `tg-` attributes are inherit from p
   </span>
 </div>
 ```
+
+## `tg-edge` Explaination
+
+The different between `cover` (default) and `edge`:
+
+![](/readme-assets/tg-edge-explaination.png)
+
+So that if `tg-edge="inset"`, the element must be higher than the viewport (`window.clientHeight`).
 
 ## JavaScript Event
 
