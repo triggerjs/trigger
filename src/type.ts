@@ -26,3 +26,7 @@ export interface TgElement {
   multiplier: number;
   lastValue: string | number | null;
 }
+
+export interface Trigger {
+  start: () => void;
+}
