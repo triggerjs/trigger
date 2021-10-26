@@ -12,7 +12,7 @@ const SHOULD_NOT_INHERIT_DIRECTIVES = [`tg-follow`, `tg-ref`];
 const directives: Record<TgDirective, any> = {};
 
 // Load all the directives
-const importDir = require.context('./', false, /tg-[\S]+\.js$/);
+const importDir = require.context('./', false, /tg-[\S]+\.ts$/);
 importDir.keys().map((key) => {
   const formatKey = key.match(/tg-[^.]+/)?.[0] as TgDirective | null;
   if (formatKey) {
