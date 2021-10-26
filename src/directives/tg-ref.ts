@@ -1,4 +1,4 @@
-export function get(value) {
+export function get(value?: string) {
   if (!value) {
     return null;
   }

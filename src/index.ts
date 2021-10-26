@@ -1,4 +1,4 @@
-import Trigger from "./trigger";
+import Trigger from './trigger';
 
 // Simple, Start.
 Trigger.start();

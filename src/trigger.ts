@@ -1,10 +1,11 @@
-import { getPrefixSetting, getPrefix } from "./prefix";
-import observer from "./observer";
-import bind from "./bind";
-import { parseAttributes, parseValues } from "./parse";
+import { getPrefixSetting, getPrefix } from './prefix';
+import observer from './observer';
+import bind from './bind';
+import { parseAttributes, parseValues } from './parse';
+import { TgElement } from './type';
 
-let activeElements = []; // Store the elements observed by IntersectionObserver
-let ob; // Store the observer instance
+let activeElements: TgElement[] = []; // Store the elements observed by IntersectionObserver
+let ob: IntersectionObserver | null = null; // Store the observer instance
 
 getPrefixSetting(); // Get the customised prefix setting if available
 
@@ -13,7 +14,7 @@ function observeElements() {
     entries.forEach((entry) => {
       let { target } = entry;
       if (entry.isIntersecting) {
-        activeElements.push(parseAttributes(target));
+        activeElements.push(parseAttributes(target as HTMLElement));
       } else {
         // Remove element from array if not intersecting
         activeElements = activeElements.filter(function (obj) {
@@ -26,7 +27,7 @@ function observeElements() {
 
 function eventListeners() {
   // Bind tg elements
-  window.addEventListener("DOMContentLoaded", () => {
+  window.addEventListener('DOMContentLoaded', () => {
     // Find all [tg-name] elements
     bind(ob);
 
@@ -35,33 +36,33 @@ function eventListeners() {
       let allElements = [
         ...document.querySelectorAll(`[${getPrefix()}name]`),
       ].map((element) => {
-        return parseAttributes(element);
+        return parseAttributes(element as HTMLElement);
       });
       parseValues(allElements);
     });
   });
 
   // Re-bind if resize occurs
-  window.addEventListener("resize", () => {
+  window.addEventListener('resize', () => {
     bind(ob, {
       before: () => {
         // Clean Up if necessary
         activeElements.forEach((element) => {
-          ob.unobserve(element.el);
+          ob?.unobserve(element.el);
         });
         // Clean up activeElements
-        activeElements = []
+        activeElements = [];
       },
     });
   });
 
   // Update the value of CSS variable for [tg-name] elements when scroll event happens
-  window.addEventListener("scroll", (e) => {
+  window.addEventListener('scroll', (e) => {
     parseValues(activeElements);
   });
 }
 
-let Trigger = {
+const Trigger = {
   start() {
     if (!document.body) {
       console.warn(`Unable to initialise, document.body does not exist.`);
