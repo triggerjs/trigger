@@ -1,5 +1,12 @@
 # Trigger JS
 
+[![npm version](https://img.shields.io/npm/v/@triggerjs/trigger.svg)](https://www.npmjs.com/package/@triggerjs/trigger)
+[![npm downloads](https://img.shields.io/npm/dm/@triggerjs/trigger.svg)](https://www.npmjs.com/package/@triggerjs/trigger)
+![GitHub Stars](https://img.shields.io/github/stars/triggerjs/trigger)
+![Github Forks](https://img.shields.io/github/forks/triggerjs/trigger)
+![GitHub Open Issues](https://img.shields.io/github/issues/triggerjs/trigger)
+![License](https://img.shields.io/github/license/triggerjs/trigger)
+
 Get the desired value with CSS variable on page scroll for your animation need, without writing a single line of JavaScript code.
 
 Sometimes we want to create an animation or update the CSS style of an HTML element based on the scroll position, just like playing a video forward and backward by scrolling up and down.

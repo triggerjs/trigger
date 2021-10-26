@@ -1,5 +1,12 @@
 # Trigger JS
 
+[![npm version](https://img.shields.io/npm/v/@triggerjs/trigger.svg)](https://www.npmjs.com/package/@triggerjs/trigger)
+[![npm downloads](https://img.shields.io/npm/dm/@triggerjs/trigger.svg)](https://www.npmjs.com/package/@triggerjs/trigger)
+![GitHub Stars](https://img.shields.io/github/stars/triggerjs/trigger)
+![Github Forks](https://img.shields.io/github/forks/triggerjs/trigger)
+![GitHub Open Issues](https://img.shields.io/github/issues/triggerjs/trigger)
+![License](https://img.shields.io/github/license/triggerjs/trigger)
+
 透過 CSS 變數，獲取製作頁面捲動動畫所需的值，毋須編寫任何 JavaScript 代碼。
 
 有時候我們想因應頁面捲動的位置建立動畫，或更新 HTML 元素的 CSS 樣式。就像影片播放一樣，動畫在頁面向上捲動時前進，向下捲動時後退。

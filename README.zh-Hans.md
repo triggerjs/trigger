@@ -1,5 +1,12 @@
 # Trigger JS
 
+[![npm version](https://img.shields.io/npm/v/@triggerjs/trigger.svg)](https://www.npmjs.com/package/@triggerjs/trigger)
+[![npm downloads](https://img.shields.io/npm/dm/@triggerjs/trigger.svg)](https://www.npmjs.com/package/@triggerjs/trigger)
+![GitHub Stars](https://img.shields.io/github/stars/triggerjs/trigger)
+![Github Forks](https://img.shields.io/github/forks/triggerjs/trigger)
+![GitHub Open Issues](https://img.shields.io/github/issues/triggerjs/trigger)
+![License](https://img.shields.io/github/license/triggerjs/trigger)
+
 通过 CSS 变量，获取制作页面滚动动画所需的值，毋须编写任何 JavaScript 代码。
 
 有时候我们想根据页面滚动的位置制作动画，或更新 HTML 元素的 CSS 样式。就像视频播放一样，动画在页面向上滚动时前进，向下滚动时后退。
