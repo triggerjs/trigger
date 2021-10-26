@@ -38,9 +38,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: TS Check
-        run: tsc
-
       - name: Build for production
         run: npm run prod
 
