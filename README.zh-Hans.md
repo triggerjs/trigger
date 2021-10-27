@@ -18,6 +18,8 @@
 
 ## 如何使用
 
+### 方法一：使用 CDN 版本
+
 1. 通过 script 标签将 trigger.js 加载到网页中：
 
 ```html
@@ -45,6 +47,39 @@
 ```
 
 3. 滚动页面，测试效果。
+
+### 方法二：从源代码打包
+
+1. 从以下任一途径获取源代码：
+   - GitHub
+    ```bash
+    git clone https://github.com/triggerjs/trigger.git
+    ```
+   - NPM
+    ```bash
+    npm i @triggerjs/trigger
+    ```
+2. 切换到目录内，安装依赖：
+   ```bash
+   npm install
+   ```
+3. 本身已经有一个预打包的版本在 `dist/bundle.js`。运行一个本地网页服务器，查看范例欢迎页 `index.html`：
+   1. 例如通过运行 `npx serve`
+   2. 在浏览器中打开 `http://localhost:5000`
+   3. 滚动页面，测试效果。
+4. 以下指令会打包一个新的版本到 `dist/bundle.js`:
+   - 开发环境版本（持续监听修改）：
+     ```bash
+     npm run watch
+     ```
+   - 开发环境版本：
+     ```bash
+     npm run build
+     ```
+   - 生产环境版本：
+     ```bash
+     npm run prod
+     ```
 
 ## `tg-` 属性列表
 

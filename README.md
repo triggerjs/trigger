@@ -18,6 +18,7 @@ Read this document in other languages: [English](README.md), [繁體中文](READ
 
 ## Getting Started
 
+### Method 1: Via CDN
 1. Include Trigger JS to your webpage with script tag:
 
 ```html
@@ -47,6 +48,39 @@ In the above example, CSS variable `--scrolled` will be available to `#greeting`
 ```
 
 3. Scroll the page and see the result.
+
+### Method 2: Build from source
+
+1. Get the library in either way:
+   - From GitHub
+    ```bash
+    git clone https://github.com/triggerjs/trigger.git
+    ```
+   - From NPM
+    ```bash
+    npm i @triggerjs/trigger
+    ```
+2. Change to the directory, install the dependencies:
+   ```bash
+   npm install
+   ```
+3. There is already a pre-built version located in `dist/bundle.js`. Run a local web server and checkout `index.html` for the greeting example:
+   1. For example, with `npx serve`
+   2. Open up `http://localhost:5000` in web browser.
+   3. Scroll the page and see the result.
+4. The following command will build a new version to `dist/bundle.js`:
+   - For development (with watch):
+     ```bash
+     npm run watch
+     ```
+   - For development:
+     ```bash
+     npm run build
+     ```
+   - For production:
+     ```bash
+     npm run prod
+     ```
 
 ## The `tg-` Attributes
 
