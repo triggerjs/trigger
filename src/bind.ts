@@ -4,6 +4,7 @@ export interface BindHook {
   before?: () => void;
   after?: () => void;
 }
+
 export default function (
   observer: IntersectionObserver | null,
   hook?: BindHook
