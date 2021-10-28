@@ -3,7 +3,7 @@ import { parseAttributes, parseValues } from './parse';
 import observer from './observer';
 import bind from './bind';
 
-import { TgElement, Trigger } from './type';
+import { TgElement, Trigger as TriggerType } from './type';
 
 let activeElements: TgElement[] = []; // Store the elements observed by IntersectionObserver
 let ob: IntersectionObserver | null = null; // Store the observer instance
@@ -73,7 +73,7 @@ function eventListeners() {
   });
 }
 
-const Trigger: Trigger = {
+const Trigger: TriggerType = {
   start() {
     if (!document.body) {
       console.warn(`Unable to initialise, document.body does not exist.`);
