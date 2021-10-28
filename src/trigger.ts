@@ -1,14 +1,20 @@
 import { getPrefixSetting, getPrefix } from './prefix';
+import { parseAttributes, parseValues } from './parse';
 import observer from './observer';
 import bind from './bind';
-import { parseAttributes, parseValues } from './parse';
-import { TgElement } from './type';
+
+import { TgElement, Trigger } from './type';
 
 let activeElements: TgElement[] = []; // Store the elements observed by IntersectionObserver
 let ob: IntersectionObserver | null = null; // Store the observer instance
 
 getPrefixSetting(); // Get the customised prefix setting if available
 
+/**
+ * Observe all `HTMLElement`.
+ * 
+ * @private
+ */
 function observeElements() {
   ob = observer((entries) => {
     entries.forEach((entry) => {
@@ -25,6 +31,11 @@ function observeElements() {
   });
 }
 
+/**
+ * Add event listener for `DOMContentLoaded`, `resize`, `scroll` events of window.
+ * 
+ * @private
+ */
 function eventListeners() {
   // Bind tg elements
   window.addEventListener('DOMContentLoaded', () => {
@@ -62,7 +73,7 @@ function eventListeners() {
   });
 }
 
-const Trigger = {
+const Trigger: Trigger = {
   start() {
     if (!document.body) {
       console.warn(`Unable to initialise, document.body does not exist.`);

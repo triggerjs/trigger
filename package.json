@@ -2,12 +2,14 @@
   "name": "@triggerjs/trigger",
   "version": "1.0.6",
   "description": "A library for creating scroll-based animation with HTML attributes and CSS variables.",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode development",
     "prod": "webpack --mode production",
     "watch": "webpack --watch --mode development",
-    "format": "prettier --write '**/*.{ts,tsx,js,jsx,json,.md}'"
+    "format": "prettier --write '**/*.{ts,tsx,js,jsx,json,.md}'",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,8 @@
     "@types/webpack-env": "^1.16.3",
     "babel-loader": "^8.2.2",
     "fork-ts-checker-webpack-plugin": "^6.4.0",
+    "husky": "^7.0.0",
+    "lint-staged": "^11.2.5",
     "prettier": "^2.4.1",
     "typescript": "^4.4.4",
     "webpack": "^5.59.0",
@@ -34,5 +38,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "unpkg": "dist/bundle.js"
+  "unpkg": "dist/bundle.js",
+  "lint-staged": {
+    "src/*/*.{ts,js,json}": [
+      "prettier --write"
+    ]
+  }
 }
