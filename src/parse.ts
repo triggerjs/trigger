@@ -90,7 +90,7 @@ export function parseValues(elements: TgElement[]) {
 
     // edge = inset
     if (edge === 'inset') {
-      percentage = (scrolled - top) / clientHeight;
+      percentage = (scrolled - top) / (height - clientHeight);
     }
 
     let value: string | number;
