@@ -11,12 +11,21 @@ export function get(value?: string) {
           arr[0].split(',').forEach((key) => {
             items[key.trim()] = arr[1].trim();
           });
+        }else if(arr[0].indexOf('-') > -1){
+          let [from, to] = arr[0].split('-').map((val)=>{
+            return +val
+          }).sort((a, b) => a - b)
+
+          for(let i = from; i <= to; i++){
+            items[i] = arr[1].trim();
+          }
         } else {
           items[arr[0].trim()] = arr[1].trim();
         }
       }
     });
   }
+console.log(items);
 
   return items;
 }
