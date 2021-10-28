@@ -2,7 +2,7 @@
   "name": "@triggerjs/trigger",
   "version": "1.0.6",
   "description": "A library for creating scroll-based animation with HTML attributes and CSS variables.",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "build": "webpack --mode development",
     "prod": "webpack --mode production",
