@@ -12,7 +12,7 @@ getPrefixSetting(); // Get the customised prefix setting if available
 
 /**
  * Observe all `HTMLElement`.
- * 
+ *
  * @private
  */
 function observeElements() {
@@ -33,7 +33,7 @@ function observeElements() {
 
 /**
  * Add event listener for `DOMContentLoaded`, `resize`, `scroll` events of window.
- * 
+ *
  * @private
  */
 function eventListeners() {

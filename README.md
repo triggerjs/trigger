@@ -19,6 +19,7 @@ Read this document in other languages: [English](README.md), [繁體中文](READ
 ## Getting Started
 
 ### Method 1: Via CDN
+
 1. Include Trigger JS to your webpage with script tag:
 
 ```html
@@ -53,13 +54,13 @@ In the above example, CSS variable `--scrolled` will be available to `#greeting`
 
 1. Get the library in either way:
    - From GitHub
-    ```bash
-    git clone https://github.com/triggerjs/trigger.git
-    ```
+   ```bash
+   git clone https://github.com/triggerjs/trigger.git
+   ```
    - From NPM
-    ```bash
-    npm i @triggerjs/trigger
-    ```
+   ```bash
+   npm i @triggerjs/trigger
+   ```
 2. Change to the directory, install the dependencies:
    ```bash
    npm install
@@ -84,18 +85,18 @@ In the above example, CSS variable `--scrolled` will be available to `#greeting`
 
 ## The `tg-` Attributes
 
-| Attribute   | Type     | Default | Description                                                                                                                                                                                                                                                           |
-| ----------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `tg-name`   | Required | -       | The CSS variable name to store the value, with or without `--` prefix.                                                                                                                                                                                                |
-| `tg-from`   | Optional | `0`     | The start value                                                                                                                                                                                                                                                       |
-| `tg-to`     | Optional | `1`     | The end value                                                                                                                                                                                                                                                         |
-| `tg-steps`  | Optional | `100`   | How many steps between `tg-from` and `tg-to`                                                                                                                                                                                                                          |
-| `tg-step`   | Optional | `0`     | Step per increment, if this value is other than `0`, will override `tg-steps`.                                                                                                                                                                                        |
-| `tg-map`    | Optional | (Empty) | map the value to another value. Format: `value: newValue; value2: newValue2`. Multiple values map to one value is also supported: `value,value2,value3: newValue`                                                                                                     |
-| `tg-filter` | Optional | (Empty) | Only trigger if the scroll value is on the list. Format: `1,3,5,7,9`. By default, the filter mode is `retain`, if we want to switch the mode to `exact`, add an `!` at the end. Read more about this in a dedicated section below.                                    |
-| `tg-edge`   | Optional | cover   | When should the calculation starts and ends. `cover` means off-screen to off-screen, the calculation begins right on the element appear at the bottom, ends after the element disappears at the top; `inset` means the calculation begins after the top edge of the element touches the top of the screen, ends when the bottom edge of the element reached the bottom of the screen. See below section for a diagram.                        |
-| `tg-follow` | Optional | (Empty) | Use the calculation result from another element instead. The value of `tg-follow` is the value of the target element's `tg-ref`. **Important**: When `tg-follow` is set, `tg-from`, `tg-to`, `tg-steps`, `tg-step` and `tg-edge` will be ignored in the same element. |
-| `tg-ref`    | Optional | (Empty) | Define the name that can be referenced (followed) by another element using `tg-follow`.                                                                                                                                                                               |
+| Attribute   | Type     | Default | Description                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ----------- | -------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tg-name`   | Required | -       | The CSS variable name to store the value, with or without `--` prefix.                                                                                                                                                                                                                                                                                                                                                 |
+| `tg-from`   | Optional | `0`     | The start value                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `tg-to`     | Optional | `1`     | The end value                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `tg-steps`  | Optional | `100`   | How many steps between `tg-from` and `tg-to`                                                                                                                                                                                                                                                                                                                                                                           |
+| `tg-step`   | Optional | `0`     | Step per increment, if this value is other than `0`, will override `tg-steps`.                                                                                                                                                                                                                                                                                                                                         |
+| `tg-map`    | Optional | (Empty) | map the value to another value. Format: `value: newValue; value2: newValue2`. Multiple values map to one value is also supported: `value,value2,value3: newValue`                                                                                                                                                                                                                                                      |
+| `tg-filter` | Optional | (Empty) | Only trigger if the scroll value is on the list. Format: `1,3,5,7,9`. By default, the filter mode is `retain`, if we want to switch the mode to `exact`, add an `!` at the end. Read more about this in a dedicated section below.                                                                                                                                                                                     |
+| `tg-edge`   | Optional | cover   | When should the calculation starts and ends. `cover` means off-screen to off-screen, the calculation begins right on the element appear at the bottom, ends after the element disappears at the top; `inset` means the calculation begins after the top edge of the element touches the top of the screen, ends when the bottom edge of the element reached the bottom of the screen. See below section for a diagram. |
+| `tg-follow` | Optional | (Empty) | Use the calculation result from another element instead. The value of `tg-follow` is the value of the target element's `tg-ref`. **Important**: When `tg-follow` is set, `tg-from`, `tg-to`, `tg-steps`, `tg-step` and `tg-edge` will be ignored in the same element.                                                                                                                                                  |
+| `tg-ref`    | Optional | (Empty) | Define the name that can be referenced (followed) by another element using `tg-follow`.                                                                                                                                                                                                                                                                                                                                |
 
 ## Value Mapping
 
@@ -286,7 +287,7 @@ We can also listen to the `tg` event on an element with JavaScript:
 </style>
 
 <script>
-  document.querySelector("#heading").addEventListener("tg", (e) => {
+  document.querySelector('#heading').addEventListener('tg', (e) => {
     console.log(e.detail); // {value: '#666'}
   });
 </script>
