@@ -253,7 +253,7 @@
 
 ## `tg-edge` 图解
 
-`cover`（默认值）和 `edge` 的分别如下图所示：
+`cover`（默认值）和 `inset` 的区别如下图所示：
 
 ![](/readme-assets/tg-edge-explaination.png)
 
