@@ -63,7 +63,7 @@ export function parseValues(elements: TgElement[]) {
   let clientHeight = document.documentElement.clientHeight;
 
   elements.forEach((element) => {
-    let {
+    const {
       el,
       top,
       height,
