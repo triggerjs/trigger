@@ -85,13 +85,11 @@ export function parseValues(elements: TgElement[]) {
       return;
     }
 
-    // edge = cover by default
-    let percentage = (scrolled - top + clientHeight) / (clientHeight + height);
-
-    // edge = inset
-    if (edge === 'inset') {
-      percentage = (scrolled - top) / (height - clientHeight);
-    }
+    // edge is 'cover' by default
+    const percentage =
+      edge === 'inset'
+        ? (scrolled - top) / (height - clientHeight)
+        : (scrolled - top + clientHeight) / (clientHeight + height);
 
     let value: string | number;
 
