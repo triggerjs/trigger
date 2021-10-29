@@ -93,7 +93,7 @@ export function parseValues(elements: TgElement[]) {
 
     let value: string | number;
 
-    let mappingValue = (
+    const mappingValue = (
       from +
       Math.floor((segments + 1) * percentage) * increment * multiplier
     ).toFixed(decimals);
