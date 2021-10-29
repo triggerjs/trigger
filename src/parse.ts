@@ -59,8 +59,8 @@ export function parseAttributes(element: HTMLElement): TgElement {
 
 // Calculation happens here, this function is called when scroll event happens. So keep this as light as possible.
 export function parseValues(elements: TgElement[]) {
-  let scrolled = document.documentElement.scrollTop;
-  let clientHeight = document.documentElement.clientHeight;
+  const scrolled = document.documentElement.scrollTop;
+  const clientHeight = document.documentElement.clientHeight;
 
   elements.forEach((element) => {
     const {
