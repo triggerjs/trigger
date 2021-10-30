@@ -25,7 +25,5 @@ export function get(value?: string) {
       }
     });
   }
-console.log(items);
-
   return items;
 }

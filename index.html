@@ -22,7 +22,7 @@
       }
 
       .container {
-        height: 300vh;
+        height: 200vh;
       }
 
       .sticky {
@@ -35,7 +35,7 @@
         min-height: 100vh;
         position: sticky;
         top: 0;
-        filter: blur(calc(var(--blur) * 1px));
+        font-size: calc(var(--size)*1em);
       }
 
       span {
@@ -46,11 +46,11 @@
   <body>
     <div
       class="container"
-      tg-name="blur"
+      tg-name="size"
       tg-edge="inset"
-      tg-from="100"
-      tg-to="0"
-      tg-edge="inset"
+      tg-from="14"
+      tg-to="20"
+      tg-bezier="0.23, 1.5, 0.32, 2"
     >
       <div class="container" tg-name="opacity" tg-from="0" tg-to="1">
         <div class="sticky">
