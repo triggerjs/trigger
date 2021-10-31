@@ -95,6 +95,7 @@
 | `tg-edge`   | 选填 | cover        | 计算滚动值的起始点与结束点。`cover` 代表画面外至画面外，即在元素从底部进入画面时开始计算，从顶部完整离开画面时结束；`inset` 代表当元素的顶部触及页面的顶部时开始计算，元素的底部触及页面的底部时结束。以下将有图解说明。 |
 | `tg-follow` | 选填 | (空白字符串) | 引用其他元素的计算值。`tg-follow` 的设定值等于目标元素的 `tg-ref` 设定值。**注意**：当设定了 `tg-follow`，同一元素下的 `tg-from`、`tg-to`、`tg-steps`、`tg-step` 以及 `tg-edge` 设置会被忽略。                           |
 | `tg-ref`    | 选填 | (空白字符串) | 定义可以被其他元素通过 `tg-follow` 引用的名称。                                                                                                                                                                          |
+| `tg-bezier` | 选填 | (空白字符串) | 贝塞尔曲线设定，设定值为 `ease`、`easeIn`、`easeOut`、`easeInOut` 或自定义的贝塞尔曲线数值，格式是：`p1x,p1y,p2x,p2y`。                                                                                                  |
 
 ## 映射 (Value Mapping)
 
