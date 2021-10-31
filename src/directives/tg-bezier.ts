@@ -11,6 +11,7 @@ export function get(value?: String) {
       }
       return arr;
     } else if (!defaultBezier.hasOwnProperty(value as string)) {
+      // Available named bezier values: `ease`, `easeIn`, `easeOut`, `easeInOut`
       throw new Error(
         'The default value of the bazier function does not exist！'
       );
