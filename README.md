@@ -14,7 +14,7 @@ Get the desired value with CSS variable on page scroll for your animation needed
 
 Sometimes we want to create an animation or update the CSS style of an HTML element based on the scroll position, just like fast-forwarding or rewinding a video by scrolling up and down.
 
-When Trigger started up, it only had the function that an element faded in or out in a page when an user scrolled it by setting a number from 0 to 1. However, This setting was not enough for various of animation needs. The number range needed to be configurable. With the helps of mapping and filtering, we are allowed to map a number to CSS effect such as color, for us to use it in CSS directly. Checkout [examples here](https://codepen.io/collection/eJmoMr).
+When Trigger started up, it only had the function that an element faded in or out in a page when an user scrolled it by setting a number from 0 to 1. However, This setting was not enough for various of animation needed. The number range needed to be configurable. With the helps of mapping and filtering, we are allowed to map a number to CSS effect such as color for us to use it in CSS directly. Checkout [examples here](https://codepen.io/collection/eJmoMr).
 
 Read this document in other languages: [English](README.md), [繁體中文](README.zh-Hant.md), [简体中文](README.zh-Hans.md).
 
@@ -67,7 +67,7 @@ In the above example, CSS variable `--scrolled` is added to the selector `#greet
    ```bash
    npm install
    ```
-3. There is already a pre-built version `bundle.js` located in `dist`. Run a local web server and browse the greeting example in `index.html` :
+3. There is a pre-built version `bundle.js` located in `dist`. Run a local web server and browse the greeting example in `index.html` :
    1. For example, type `npx serve` in the terminal
    2. Open up `http://localhost:5000` in web browser.
    3. Scroll the page and see the result.
@@ -93,11 +93,11 @@ In the above example, CSS variable `--scrolled` is added to the selector `#greet
 | `tg-from`   | Optional | `0`     | The start value                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `tg-to`     | Optional | `1`     | The end value                                                                                                                                                                                                                                                                                                                                                                                                          |
 | `tg-steps`  | Optional | `100`   | Trigger steps from `tg-from` to `tg-to`                                                                                                                                                                                                                                                                                                                                                                           |
-| `tg-step`   | Optional | `0`     | Step per increment, if this value isn't `0`, will override `tg-steps`.                                                                                                                                                                                                                                                                                                                                         |
-| `tg-map`    | Optional | (Empty) | map the value to another value. Format: `value: newValue; value2: newValue2`. Multiple values mapped to one value is also supported: `value,value2,value3: newValue`                                                                                                                                                                                                                                                      |
+| `tg-step`   | Optional | `0`     | Step per increment. If this value isn't `0`, will override `tg-steps`.                                                                                                                                                                                                                                                                                                                                         |
+| `tg-map`    | Optional | (Empty) | Map the value to another value. Format: `value: newValue; value2: newValue2`. Multiple values mapped to one value is also supported: `value,value2,value3: newValue`                                                                                                                                                                                                                                                      |
 | `tg-filter` | Optional | (Empty) | Only trigger if the scroll value is on the list. Format: `1,3,5,7,9`. By default, the filter mode is `retain`. If we want to switch the mode to `exact`, add an `!` at the end of the value. Read more about this in the dedicated section following.                                                                                                                                                                                     |
 | `tg-edge`   | Optional | cover   | Calculate the start and end of the scrolling effect. `cover` means off-screen to off-screen. The calculation starts in the appearance of the element at the bottom, and ends in the disappearance of element at the top; `inset` represents the calculation begins after the top edge of the element touches the top of the screen, ends when the bottom edge of the element reached the bottom of the screen. See below section for a diagram. |
-| `tg-follow` | Optional | (Empty) | Use the result calculated from another element instead. The value of `tg-follow` is the value of the target element's `tg-ref`. **Caution**: When `tg-follow` is set, `tg-from`, `tg-to`, `tg-steps`, `tg-step` and `tg-edge` are ignored in the same element.                                                                                                                                                  |
+| `tg-follow` | Optional | (Empty) | Use the result calculated from another element. The value of `tg-follow` is the value of the target element's `tg-ref`. **Caution**: When `tg-follow` is set, `tg-from`, `tg-to`, `tg-steps`, `tg-step` and `tg-edge` are ignored in the same element.                                                                                                                                                  |
 | `tg-ref`    | Optional | (Empty) | Define the name of the referenced used by an element with `tg-follow`.                                                                                                                                                                                                                                                                                                                                |
 
 ## Value Mapping
@@ -143,9 +143,9 @@ The following example shows how to update the text color with the rules below:
 
 ## Steps & Step
 
-Let's say `tg-from="200"` and `tg-to="-200"`, we want to move the element in x position with `transform: translateX()`. `tg-steps` let us define how many steps from `200` to `-200`, for example, `tg-steps="400"` means run from `200` to `-200` with `400` steps, `1` per increment; In other words, `tg-steps="800"` means `0.5` per increment.
+Let's say `tg-from="200"` and `tg-to="-200"`, we want to move the element in x position with `transform: translateX()`. `tg-steps` lets us define how many steps from `200` to `-200`, for example, `tg-steps="400"` means run from `200` to `-200` with `400` steps, `1` per increment; In other words, `tg-steps="800"` means `0.5` per increment.
 
-But sometimes, we do not want to do the math by ourselves, that's why `tg-step` exists. `tg-step` defines the exact value of increment. Please note that if `tg-step` is defined, `tg-steps` will be ingored.
+But sometimes, we do not want to do the math by ourselves, that's why `tg-step` exists. `tg-step` defines the exact value of increment. Please note that if `tg-step` is defined, `tg-steps` will be ignored.
 
 ## Noise Reduction
 
@@ -222,7 +222,7 @@ So let's say we want the text color becomes blue only when the calculation value
 </h1>
 ```
 
-It works, but the code becomes redundant . To solve this, we can switch the filter mode to `exact` by adding an `!` at the end of the value of `tg-filter`:
+It works, but the code becomes redundant. To solve this, we can switch the filter mode to `exact` by adding an `!` at the end of the value of `tg-filter`:
 
 ```html
 <h1
@@ -240,7 +240,7 @@ It works, but the code becomes redundant . To solve this, we can switch the filt
 
 In `exact` mode, `--color` becomes `blue` when the value is `5`, and becomes the default when the value is not `5`.
 
-The design of adding `!` to the value of `tg-filter` is the demand is exclusive to the the attribute. Establishing another attribute for the mode is unnecessary or even leads to the misunderstanding.
+The design of adding `!` to the value of `tg-filter` is the demand is exclusive to the attribute. Establishing another attribute for the mode is unnecessary or even leads to the misunderstanding.
 
 ## Value Inheritance
 
@@ -280,7 +280,7 @@ We can also listen to the `tg` event on an element with JavaScript:
 
 <style>
   body {
-    padding: 100vh 0; /* In order to make the page have enough rooms for scrolling */
+    padding: 100vh 0; /* In order to make the page have enough room for scrolling */
   }
 
   #heading {
