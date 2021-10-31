@@ -36,7 +36,5 @@ export function get(value?: string, data?: TgElementExtraData) {
       }
     });
   }
-  console.log(items);
-
   return items;
 }

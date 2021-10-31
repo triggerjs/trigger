@@ -1,6 +1,6 @@
 import { EdgeOptions } from './directives/tg-edge';
 import { FilterValue } from './directives/tg-filter';
-
+export type BezierOption = string | Array<number>
 export type CssVariable = `--${string}`;
 export type AttributeNumber = `${number}` | number;
 export type Prefix = `${string}-`;
@@ -25,6 +25,7 @@ export interface TgElement {
   decimals: number;
   multiplier: number;
   lastValue: string | number | null;
+  bezier: string | Array<number>
 }
 
 export interface Trigger {
