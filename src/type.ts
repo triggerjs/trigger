@@ -30,3 +30,8 @@ export interface TgElement {
 export interface Trigger {
   start: () => void;
 }
+
+export interface TgElementExtraData {
+  increment?: number;
+  decimals?: number;
+}

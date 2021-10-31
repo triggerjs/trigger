@@ -23,10 +23,7 @@ export function parseAttributes(element: HTMLElement): TgElement {
   const to: number = extractValues(actualElement, `${getPrefix()}to`);
   const steps: number = extractValues(actualElement, `${getPrefix()}steps`);
   const step: number = extractValues(actualElement, `${getPrefix()}step`);
-  let mapping: Record<string, string> = extractValues(
-    element,
-    `${getPrefix()}map`
-  );
+
   const filter: FilterValue = extractValues(element, `${getPrefix()}filter`);
   const edge: EdgeOptions = extractValues(actualElement, `${getPrefix()}edge`);
 
@@ -35,6 +32,15 @@ export function parseAttributes(element: HTMLElement): TgElement {
   const segments = range / increment;
   const decimals = decimalsLength(increment);
   const multiplier = from > to ? -1 : 1;
+
+  let mapping: Record<string, string> = extractValues(
+    element,
+    `${getPrefix()}map`,
+    {
+      increment,
+      decimals,
+    }
+  );
 
   return {
     el: element,

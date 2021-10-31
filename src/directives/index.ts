@@ -1,5 +1,5 @@
 import { getPrefix } from '../prefix';
-import { CustomDirective, TgDirective } from '../type';
+import { CustomDirective, TgDirective, TgElementExtraData } from '../type';
 
 const SHOULD_NOT_INHERIT_DIRECTIVES = [`tg-follow`, `tg-ref`];
 
@@ -23,7 +23,8 @@ importDir.keys().map((key) => {
 // Extract the value of tg element
 export function extractValues(
   element: HTMLElement,
-  directive: CustomDirective
+  directive: CustomDirective,
+  data?: TgElementExtraData
 ) {
   // Check if the directive prefix is customised
   // Replace custom prefix to tg- here if necessary
@@ -51,7 +52,7 @@ export function extractValues(
     ? targetElement.getAttribute(directive)
     : null;
 
-  return directives[directiveKey].get(value);
+  return directives[directiveKey].get(value, data);
 }
 
 // Find the target element to get the value, is it from self, or inherit from parents?
