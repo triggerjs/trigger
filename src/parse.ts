@@ -95,7 +95,7 @@ export function parseValues(elements: TgElement[]) {
       return;
     }
 
-    // edge = cover by default
+    // edge is 'cover' by default
     let percentage =
       edge === 'cover'
         ? Math.min(
