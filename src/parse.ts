@@ -8,11 +8,8 @@ import { TgElement } from './type';
 // This function will be called in observe stage, caching those values into an object for ease of use in scroll event.
 export function parseAttributes(element: HTMLElement): TgElement {
   const follow: HTMLElement = extractValues(element, `${getPrefix()}follow`);
-  let actualElement = element;
 
-  if (follow !== null) {
-    actualElement = follow;
-  }
+  const actualElement = follow || element;
 
   const style = getComputedStyle(actualElement);
   const top = Number(style.getPropertyValue('--tg-top'));
