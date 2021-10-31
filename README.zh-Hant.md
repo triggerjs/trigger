@@ -90,7 +90,7 @@
 | `tg-to`     | 選填 | `1`        | 終點值                                                                                                                                                                                                                   |
 | `tg-steps`  | 選填 | `100`      | 從 `tg-from` 至 `tg-to` 之間觸發多少次                                                                                                                                                                                   |
 | `tg-step`   | 選填 | `0`        | 每次遞加的數值，如果此值不為 `0`，則會忽略 `tg-steps` 的設定。                                                                                                                                                           |
-| `tg-map`    | 選填 | (空白字串) | 將一個值映射至另一個值。格式：`value: newValue; value2: newValue2`。亦支援同時將多個值映射至另一個值：`value,value2,value3: newValue`                                                                                    |
+| `tg-map`    | 選填 | (空白字串) | 將一個值映射至另一個值。格式：<br>- 一個值映射至另一個值：`value: newValue; value2: newValue2`<br>- 多個值映射至另一個值：`value,value2,value3: newValue`<br>- 一個範圍映射至另一個值：`value...value2: newValue`        |
 | `tg-filter` | 選填 | (空白字串) | 只當捲動值在列表當中時才觸發，格式：`1,3,5,7,9`。預設情況下，過濾模式是 `retain`（保留值），在設定值末端加入 `!` 符號可以將模式切換為 `exact`（絕對）。關於兩個模式的分別，請參考後續的內容。                            |
 | `tg-edge`   | 選填 | cover      | 計算捲動值的起始點與結束點。`cover` 代表畫面外至畫面外，即在元素從底部進入畫面時開始計算，從頂部完整離開畫面時結束；`inset` 代表當元素的頂部觸及頁面的頂部時開始計算，元素的底部觸及頁面的底部時結束。以下將有圖解說明。 |
 | `tg-follow` | 選填 | (空白字串) | 引用其他元素的計算值。`tg-follow` 的設定值等於目標元素的 `tg-ref` 設定值。**注意**：當設定了 `tg-follow`，同一元素下的 `tg-from`、`tg-to`、`tg-steps`、`tg-step` 以及 `tg-edge` 設定會被忽略。                           |
