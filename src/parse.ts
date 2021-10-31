@@ -8,11 +8,8 @@ import { TgElement } from './type';
 // This function will be called in observe stage, caching those values into an object for ease of use in scroll event.
 export function parseAttributes(element: HTMLElement): TgElement {
   const follow: HTMLElement = extractValues(element, `${getPrefix()}follow`);
-  let actualElement = element;
 
-  if (follow !== null) {
-    actualElement = follow;
-  }
+  const actualElement = follow || element;
 
   const style = getComputedStyle(actualElement);
   const top = Number(style.getPropertyValue('--tg-top'));
@@ -65,11 +62,11 @@ export function parseAttributes(element: HTMLElement): TgElement {
 
 // Calculation happens here, this function is called when scroll event happens. So keep this as light as possible.
 export function parseValues(elements: TgElement[]) {
-  let scrolled = document.documentElement.scrollTop;
-  let clientHeight = document.documentElement.clientHeight;
+  const scrolled = document.documentElement.scrollTop;
+  const clientHeight = document.documentElement.clientHeight;
 
   elements.forEach((element) => {
-    let {
+    const {
       el,
       top,
       height,
@@ -91,17 +88,15 @@ export function parseValues(elements: TgElement[]) {
       return;
     }
 
-    // edge = cover by default
-    let percentage = (scrolled - top + clientHeight) / (clientHeight + height);
-
-    // edge = inset
-    if (edge === 'inset') {
-      percentage = (scrolled - top) / (height - clientHeight);
-    }
+    // edge is 'cover' by default
+    const percentage =
+      edge === 'inset'
+        ? (scrolled - top) / (height - clientHeight)
+        : (scrolled - top + clientHeight) / (clientHeight + height);
 
     let value: string | number;
 
-    let mappingValue = (
+    const mappingValue = (
       from +
       Math.floor((segments + 1) * percentage) * increment * multiplier
     ).toFixed(decimals);
