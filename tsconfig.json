@@ -6,6 +6,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "suppressImplicitAnyIndexErrors": true,
     "strict": true,
     "downlevelIteration": true,
     "forceConsistentCasingInFileNames": true,

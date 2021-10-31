@@ -3,7 +3,8 @@ import { extractValues } from './directives';
 import { getPrefix } from './prefix';
 import { FilterValue } from './directives/tg-filter';
 import { EdgeOptions } from './directives/tg-edge';
-import { TgElement } from './type';
+import { BezierOption, TgElement } from './type';
+import { cubicBezier, defaultBezier } from './ease';
 
 // This function will be called in observe stage, caching those values into an object for ease of use in scroll event.
 export function parseAttributes(element: HTMLElement): TgElement {
@@ -30,6 +31,10 @@ export function parseAttributes(element: HTMLElement): TgElement {
   const decimals = decimalsLength(increment);
   const multiplier = from > to ? -1 : 1;
 
+  const bezier: string | Array<number> = extractValues(
+    actualElement,
+    `${getPrefix()}bezier`
+  );
   let mapping: Record<string, string> = extractValues(
     element,
     `${getPrefix()}map`,
@@ -57,6 +62,7 @@ export function parseAttributes(element: HTMLElement): TgElement {
     decimals,
     multiplier,
     lastValue: null,
+    bezier,
   };
 }
 
@@ -81,6 +87,7 @@ export function parseValues(elements: TgElement[]) {
       filter,
       edge,
       lastValue,
+      bezier,
     } = element;
 
     // If the name is equal to '_' (--_), skip
@@ -89,10 +96,19 @@ export function parseValues(elements: TgElement[]) {
     }
 
     // edge is 'cover' by default
-    const percentage =
-      edge === 'inset'
-        ? (scrolled - top) / (height - clientHeight)
-        : (scrolled - top + clientHeight) / (clientHeight + height);
+    let percentage =
+      edge === 'cover'
+        ? Math.min(
+            Math.max(
+              (scrolled + clientHeight - top) / (clientHeight + height),
+              0
+            ),
+            1
+          )
+        : Math.min(Math.max((scrolled - top) / (height - clientHeight), 0), 1);
+
+    // Calculation result value of bezier
+    percentage = bezier ? ease(bezier, percentage) : percentage;
 
     let value: string | number;
 
@@ -100,12 +116,7 @@ export function parseValues(elements: TgElement[]) {
       from +
       Math.floor((segments + 1) * percentage) * increment * multiplier
     ).toFixed(decimals);
-
-    if (multiplier === 1) {
-      value = Math.min(Math.max(+mappingValue, from), to);
-    } else {
-      value = Math.min(Math.max(+mappingValue, to), from);
-    }
+    value = +mappingValue;
 
     if (filter.values.length > 0 && !filter.values.includes(value)) {
       // If the mode is 'exact', remove the CSS property
@@ -137,4 +148,14 @@ export function parseValues(elements: TgElement[]) {
       console.log('value', element, value);
     }
   });
+}
+
+function ease(bezier: BezierOption, percentage: number): number {
+  if (typeof bezier === 'string') {
+    percentage = defaultBezier[bezier as string](percentage);
+  } else {
+    let [p1x, p1y, p2x, p2y] = bezier as Array<number>;
+    percentage = cubicBezier(p1x, p1y, p2x, p2y)(percentage);
+  }
+  return percentage;
 }
