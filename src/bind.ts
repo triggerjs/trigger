@@ -13,15 +13,16 @@ export default function (
   hook && typeof hook.before === 'function' && hook.before();
 
   // Fetch all DOM elements with [tg-name] attribute and set the current top & left offset
+  const prefix = getPrefix()
   document
-    .querySelectorAll<HTMLElement>(`[${getPrefix()}name]`)
+    .querySelectorAll<HTMLElement>(`[${prefix}name]`)
     .forEach((element) => {
       const { top, height } = element.getBoundingClientRect();
 
-      element.style.setProperty('--tg-top', `${top + window.scrollY}`);
-      element.style.setProperty('--tg-height', `${height}`);
+      element.style.setProperty(`--${prefix}top`, `${top + window.scrollY}`);
+      element.style.setProperty(`--${prefix}height`, `${height}`);
 
-      observer?.observe(element);
+      observer && observer.observe(element);
     });
 
   // After Hook

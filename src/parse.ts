@@ -6,28 +6,32 @@ import { EdgeOptions } from './directives/tg-edge';
 import { BezierOption, TgElement } from './type';
 import { cubicBezier, defaultBezier } from './ease';
 
-// This function will be called in observe stage, caching those values into an object for ease of use in scroll event.
+/**
+ * This function will be called in observe stage,
+ * caching those values into an object for ease of use in scroll event.
+ */
 export function parseAttributes(element: HTMLElement): TgElement {
-  const follow: HTMLElement = extractValues(element, `${getPrefix()}follow`);
+  const prefix = getPrefix()
+  const follow: HTMLElement = extractValues(element, `${prefix}follow`);
 
   const actualElement = follow || element;
 
   const style = getComputedStyle(actualElement);
-  const top = Number(style.getPropertyValue('--tg-top'));
-  const height = Number(style.getPropertyValue('--tg-height'));
+  const top = +style.getPropertyValue(`--${prefix}top`);
+  const height = +style.getPropertyValue(`--${prefix}height`);
 
-  const name: string = extractValues(element, `${getPrefix()}name`);
-  const from: number = extractValues(actualElement, `${getPrefix()}from`);
-  const to: number = extractValues(actualElement, `${getPrefix()}to`);
-  const steps: number = extractValues(actualElement, `${getPrefix()}steps`);
-  const step: number = extractValues(actualElement, `${getPrefix()}step`);
+  const name: string = extractValues(element, `${prefix}name`);
+  const from: number = extractValues(actualElement, `${prefix}from`);
+  const to: number = extractValues(actualElement, `${prefix}to`);
+  const steps: number = extractValues(actualElement, `${prefix}steps`);
+  const step: number = extractValues(actualElement, `${prefix}step`);
   const bezier: string | Array<number> = extractValues(
     actualElement,
-    `${getPrefix()}bezier`
+    `${prefix}bezier`
   );
 
-  const filter: FilterValue = extractValues(element, `${getPrefix()}filter`);
-  const edge: EdgeOptions = extractValues(actualElement, `${getPrefix()}edge`);
+  const filter: FilterValue = extractValues(element, `${prefix}filter`);
+  const edge: EdgeOptions = extractValues(actualElement, `${prefix}edge`);
 
   const range = Math.abs(to - from);
   const increment = step === 0 ? range / steps : step;
@@ -35,9 +39,9 @@ export function parseAttributes(element: HTMLElement): TgElement {
   const decimals = decimalsLength(increment);
   const multiplier = from > to ? -1 : 1;
 
-  let mapping: Record<string, string> = extractValues(
+  const mapping: Record<string, string> = extractValues(
     element,
-    `${getPrefix()}map`,
+    `${prefix}map`,
     {
       increment,
       decimals,
@@ -66,10 +70,13 @@ export function parseAttributes(element: HTMLElement): TgElement {
   };
 }
 
-// Calculation happens here, this function is called when scroll event happens. So keep this as light as possible.
+/**
+ * Calculation happens here,
+ * this function is called when scroll event happens.
+ * So keep this as light as possible.
+ */
 export function parseValues(elements: TgElement[]) {
-  const scrolled = document.documentElement.scrollTop;
-  const clientHeight = document.documentElement.clientHeight;
+  const { scrollTop: scrolled, clientHeight } = document.documentElement;
 
   elements.forEach((element) => {
     const {
@@ -82,7 +89,8 @@ export function parseValues(elements: TgElement[]) {
       multiplier,
       name,
       from,
-      to,
+      // currently unused
+      // to,
       mapping,
       filter,
       edge,
@@ -152,9 +160,9 @@ export function parseValues(elements: TgElement[]) {
 
 function ease(bezier: BezierOption, percentage: number): number {
   if (typeof bezier === 'string') {
-    percentage = defaultBezier[bezier as string](percentage);
+    percentage = defaultBezier[bezier](percentage);
   } else {
-    let [p1x, p1y, p2x, p2y] = bezier as Array<number>;
+    const [p1x, p1y, p2x, p2y] = bezier;
     percentage = cubicBezier(p1x, p1y, p2x, p2y)(percentage);
   }
   return percentage;
