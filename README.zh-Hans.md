@@ -18,13 +18,17 @@
 
 ## 如何使用
 
-### 方法一：使用 CDN 版本
+#### 方法一：使用 CDN 版本
 
 1. 通过 script 标签将 trigger.js 加载到网页中：
-
-```html
-<script src="//unpkg.com/@triggerjs/trigger" defer></script>
-```
+   - UNPKG CDN:
+    ```html
+    <script src="//unpkg.com/@triggerjs/trigger" defer></script>
+    ```
+   - jsDelivr CDN:
+    ```html
+    <script src="//jsdelivr.com/package/npm/@triggerjs/trigger" defer></script>
+    ```
 
 2. 为对应的 DOM 元素加上 `tg-name` 属性，设定值等于接收数值的 CSS 变量名。
 
@@ -48,7 +52,7 @@
 
 3. 滚动页面，测试效果。
 
-### 方法二：从源代码打包
+#### 方法二：从源代码打包
 
 1. 从以下任一途径获取源代码：
    - GitHub
