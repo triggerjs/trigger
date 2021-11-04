@@ -1,3 +1,5 @@
+import { BezierOption } from './type';
+
 export function cubicBezier(
   p1x: number,
   p1y: number,
@@ -100,4 +102,14 @@ export const defaultBezier = {
   easeIn: cubicBezier(0.42, 0, 1, 1),
   easeOut: cubicBezier(0, 0, 0.58, 1),
   easeInOut: cubicBezier(0.42, 0, 0.58, 1),
+};
+
+export function easePercentage(bezier: BezierOption, percentage: number): number {
+  if (typeof bezier === 'string') {
+    percentage = defaultBezier[bezier](percentage);
+  } else {
+    const [p1x, p1y, p2x, p2y] = bezier;
+    percentage = cubicBezier(p1x, p1y, p2x, p2y)(percentage);
+  }
+  return percentage;
 };
