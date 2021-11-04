@@ -38,6 +38,7 @@
     "access": "public"
   },
   "unpkg": "dist/bundle.js",
+  "jsdelivr": "dist/bundle.js",
   "lint-staged": {
     "src/**/*.{ts,tsx,js,jsx,json,md}": [
       "prettier --write"
