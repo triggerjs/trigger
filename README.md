@@ -12,7 +12,7 @@
 
 Sometimes we want to update the CSS style of an HTML element based on the scroll position, just like fast-forwarding or rewinding a video by scrolling up and down.
 
-With Trigger.js, get the desired value with CSS variable on page scroll for your animation needed, without writing a single line of JavaScript code, configuration with HTML attributes. Checkout [examples here](https://codepen.io/collection/eJmoMr).
+With Trigger JS, get the desired value with CSS variable on page scroll for your animation needed, without writing a single line of JavaScript code, configuration with HTML attributes. Checkout [examples here](https://codepen.io/collection/eJmoMr).
 
 Read this document in other languages: [English](README.md), [繁體中文](README.zh-Hant.md), [简体中文](README.zh-Hans.md).
 
