@@ -8,11 +8,11 @@
 ![GitHub Open Issues](https://img.shields.io/github/issues/triggerjs/trigger)
 ![License](https://img.shields.io/github/license/triggerjs/trigger)
 
-透過 CSS 變數，獲取製作頁面捲動動畫所需的值，毋須編寫任何 JavaScript 代碼。
+*毋須編寫 JavaScript，建立頁面捲動動畫。*
 
 有時候我們想因應頁面捲動的位置建立動畫，或更新 HTML 元素的 CSS 樣式。就像影片播放一樣，動畫在頁面向上捲動時前進，向下捲動時後退。
 
-最初，它只是一個根據元素從頁底出現以至到頁頂消失，由 0 到 1 的數字。然而，這個數字對於各種各樣的動畫需求來說實在過於簡單，因此數值的範圍是可以設置的。不過，數字也不是萬能的，透過映射和過濾功能，我們可以將一個數字轉變為一個顏色或其他的值，以便我們在 CSS 中直接使用。[點擊這裡](https://codepen.io/collection/eJmoMr)查看範例。
+使用 Trigger JS，在頁面捲動時即可透過 CSS 變數取得製作動畫所需的值，而毋須編寫任何 JavaScript 代碼，相關設置則可透過 HTML 屬性實現。[點擊這裡](https://codepen.io/collection/eJmoMr)查看範例。
 
 閱讀本文檔的其他語言版本：[English](README.md)、[繁體中文](README.zh-Hant.md)、[简体中文](README.zh-Hans.md)。
 
