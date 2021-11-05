@@ -27,7 +27,7 @@
     ```
    - jsDelivr CDN:
     ```html
-    <script src="//jsdelivr.com/package/npm/@triggerjs/trigger" defer></script>
+    <script src="//cdn.jsdelivr.net/npm/@triggerjs/trigger" defer></script>
     ```
 
 2. 为对应的 DOM 元素加上 `tg-name` 属性，设定值等于接收数值的 CSS 变量名。

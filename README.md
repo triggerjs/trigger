@@ -27,7 +27,7 @@ Read this document in other languages: [English](README.md), [繁體中文](READ
     ```
    - jsDelivr CDN:
     ```html
-    <script src="//jsdelivr.com/package/npm/@triggerjs/trigger" defer></script>
+    <script src="//cdn.jsdelivr.net/npm/@triggerjs/trigger" defer></script>
     ```
 
 2. Add `tg-name` to the DOM element that you want to monitor. The value of `tg-name` is the name of the CSS variable that binds to the element.
