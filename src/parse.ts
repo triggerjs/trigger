@@ -3,8 +3,8 @@ import { extractValues } from './directives';
 import { getPrefix } from './prefix';
 import { FilterValue } from './directives/tg-filter';
 import { EdgeOptions } from './directives/tg-edge';
-import { BezierOption, TgElement } from './type';
-import { cubicBezier, defaultBezier } from './ease';
+import { TgElement } from './type';
+import { easePercentage as ease } from './ease';
 
 /**
  * This function will be called in observe stage,
@@ -108,6 +108,8 @@ export function parseValues(elements: TgElement[]) {
         getValueInRange((scrolled + clientHeight - top) / (clientHeight + height), 0, 1)
       : getValueInRange((scrolled - top) / (height - clientHeight), 0, 1);
 
+    
+
     // Calculation result value of bezier
     percentage = bezier ? ease(bezier, percentage) : percentage;
 
@@ -149,14 +151,4 @@ export function parseValues(elements: TgElement[]) {
       console.log('value', element, value);
     }
   });
-}
-
-function ease(bezier: BezierOption, percentage: number): number {
-  if (typeof bezier === 'string') {
-    percentage = defaultBezier[bezier](percentage);
-  } else {
-    const [p1x, p1y, p2x, p2y] = bezier;
-    percentage = cubicBezier(p1x, p1y, p2x, p2y)(percentage);
-  }
-  return percentage;
 }

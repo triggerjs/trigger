@@ -8,23 +8,27 @@
 ![GitHub Open Issues](https://img.shields.io/github/issues/triggerjs/trigger)
 ![License](https://img.shields.io/github/license/triggerjs/trigger)
 
-通过 CSS 变量，获取制作页面滚动动画所需的值，毋须编写任何 JavaScript 代码。
+*毋须编写 JavaScript，建立页面滚动动画。*
 
-有时候我们想根据页面滚动的位置制作动画，或更新 HTML 元素的 CSS 样式。就像视频播放一样，动画在页面向上滚动时前进，向下滚动时后退。
+有时候我们想因应页面滚动的位置建立动画，或更新 HTML 元素的 CSS 样式。就像视频播放一样，动画在页面向上滚动时前进，向下滚动时后退。
 
-最初，它只是一个根据元素从页底出现以至到页顶消失，由 0 到 1 的数字。然而，这个数字对于各种各样的动画需求来说实在过于简单，因此数值的范围是可以设置的。不过，数字也不是万能的，通过映射和过滤功能，我们可以将一个数字转变为一个颜色或其他的值，以便我们在 CSS 中直接使用。[点击这里](https://codepen.io/collection/eJmoMr)查看范例。
+使用 Trigger JS，在页面滚动时即可透过 CSS 变量取得制作动画所需的值，而毋须编写任何 JavaScript 代码，相关设置则可通过 HTML 属性实现。[点击这里](https://codepen.io/collection/eJmoMr)查看范例。
 
 阅读本文档的其他语言版本：[English](README.md)、[繁體中文](README.zh-Hant.md)、[简体中文](README.zh-Hans.md)。
 
 ## 如何使用
 
-### 方法一：使用 CDN 版本
+#### 方法一：使用 CDN 版本
 
 1. 通过 script 标签将 trigger.js 加载到网页中：
-
-```html
-<script src="//unpkg.com/@triggerjs/trigger" defer></script>
-```
+   - UNPKG CDN:
+    ```html
+    <script src="//unpkg.com/@triggerjs/trigger" defer></script>
+    ```
+   - jsDelivr CDN:
+    ```html
+    <script src="//cdn.jsdelivr.net/npm/@triggerjs/trigger" defer></script>
+    ```
 
 2. 为对应的 DOM 元素加上 `tg-name` 属性，设定值等于接收数值的 CSS 变量名。
 
@@ -48,7 +52,7 @@
 
 3. 滚动页面，测试效果。
 
-### 方法二：从源代码打包
+#### 方法二：从源代码打包
 
 1. 从以下任一途径获取源代码：
    - GitHub
