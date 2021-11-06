@@ -1,6 +1,6 @@
 {
   "name": "@triggerjs/trigger",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A library for creating scroll-based animation with HTML attributes and CSS variables.",
   "main": "index.ts",
   "scripts": {
@@ -38,6 +38,7 @@
     "access": "public"
   },
   "unpkg": "dist/bundle.js",
+  "jsdelivr": "dist/bundle.js",
   "lint-staged": {
     "src/**/*.{ts,tsx,js,jsx,json,md}": [
       "prettier --write"
