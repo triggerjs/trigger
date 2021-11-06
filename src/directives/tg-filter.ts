@@ -1,5 +1,5 @@
 export interface FilterValue {
-  mode: 'retain' | 'exact';
+  mode: 'retain' | 'exact' | 'smooth';
   values: number[];
 }
 
@@ -15,6 +15,9 @@ export function get(value?: string) {
     // default value of the css variable)
     if (value.substring(value.length - 1) === '!') {
       filter.mode = 'exact';
+      value = value.substring(0, value.length - 1);
+    } else if (value.substring(value.length - 1) === '@') {
+      filter.mode = 'smooth';
       value = value.substring(0, value.length - 1);
     }
 

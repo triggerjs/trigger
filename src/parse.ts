@@ -11,7 +11,7 @@ import { easePercentage as ease } from './ease';
  * caching those values into an object for ease of use in scroll event.
  */
 export function parseAttributes(element: HTMLElement): TgElement {
-  const prefix = getPrefix()
+  const prefix = getPrefix();
   const follow: HTMLElement = extractValues(element, `${prefix}follow`);
 
   const actualElement = follow || element;
@@ -115,8 +115,6 @@ export function parseValues(elements: TgElement[]) {
           )
         : Math.min(Math.max((scrolled - top) / (height - clientHeight), 0), 1);
 
-    
-
     // Calculation result value of bezier
     percentage = bezier ? ease(bezier, percentage) : percentage;
 
@@ -131,11 +129,23 @@ export function parseValues(elements: TgElement[]) {
     if (filter.values.length > 0 && !filter.values.includes(value)) {
       // If the mode is 'exact', remove the CSS property
       // Setting the lastValue to null to ensure correct comparison below
-      if (filter.mode === 'exact') {
-        element.lastValue = null;
-        el.style.removeProperty(name);
+      if (filter.mode === 'smooth') {
+        let region = calcKeyFrameRegion(mapping, value);
+        console.log(region);
+
+        if (region.length) {
+          value = calcKeyFrameValue(mapping, value, region);
+          console.log(value);
+        } else {
+          return;
+        }
+      } else {
+        if (filter.mode === 'exact') {
+          element.lastValue = null;
+          el.style.removeProperty(name);
+        }
+        return;
       }
-      return;
     }
 
     if (typeof mapping[value] !== 'undefined') {
@@ -159,3 +169,49 @@ export function parseValues(elements: TgElement[]) {
     }
   });
 }
+
+// 计算当前value对应的keyframe结果值
+const calcKeyFrameValue = (
+  mapping: Record<string, string>,
+  value: number,
+  region: Array<any>
+) => {
+  const [lkey, rkey] = region;
+  const lValue = mapping[lkey];
+  const rValue = mapping[rkey];
+  const range = Math.abs(+rValue - +lValue);
+  const multiplier = +lValue > +rValue ? -1 : 1;
+  const curKeyRange = Math.abs(value - +lkey);
+
+  const percentage = curKeyRange / (rkey - lkey);
+  return +lValue + range * percentage * multiplier;
+};
+
+// 计算当前value在mapping的哪个区间
+const calcKeyFrameRegion = (mapping: Record<string, string>, value: number) => {
+  if (Object.keys(mapping).length === 1) {
+    return [];
+  } else {
+    let lastKey = '',
+      currentKey = '';
+
+    for (const key of Object.getOwnPropertyNames(mapping).sort((a, b) => {
+      return +a - +b;
+    })) {
+      if (lastKey === null) {
+        lastKey = key;
+        continue;
+      } else {
+        currentKey = key;
+        if (
+          (value >= +lastKey && value <= +currentKey) ||
+          (value >= +currentKey && value <= +lastKey)
+        ) {
+          return [lastKey, currentKey];
+        }
+      }
+      lastKey = key;
+    }
+  }
+  return [];
+};
