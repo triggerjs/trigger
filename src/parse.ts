@@ -1,10 +1,12 @@
-import { decimalsLength } from './helpers';
+import { decimalsLength, getMapTypeAndValue } from './helpers';
 import { extractValues } from './directives';
 import { getPrefix } from './prefix';
 import { FilterValue } from './directives/tg-filter';
 import { EdgeOptions } from './directives/tg-edge';
 import { TgElement } from './type';
 import { easePercentage as ease } from './ease';
+import { gradientColors } from './color';
+import rgbcolor from 'rgb-color';
 
 /**
  * This function will be called in observe stage,
@@ -131,11 +133,10 @@ export function parseValues(elements: TgElement[]) {
       // Setting the lastValue to null to ensure correct comparison below
       if (filter.mode === 'smooth') {
         let region = calcKeyFrameRegion(mapping, value);
-        console.log(region);
+        // console.log(region);
 
         if (region.length) {
           value = calcKeyFrameValue(mapping, value, region);
-          console.log(value);
         } else {
           return;
         }
@@ -165,29 +166,36 @@ export function parseValues(elements: TgElement[]) {
       );
 
       element.lastValue = value;
-      console.log('value', element, value);
     }
   });
 }
 
-// 计算当前value对应的keyframe结果值
+// Calculate the result value of the keyframe corresponding to the current value
 const calcKeyFrameValue = (
   mapping: Record<string, string>,
   value: number,
   region: Array<any>
 ) => {
   const [lkey, rkey] = region;
-  const lValue = mapping[lkey];
-  const rValue = mapping[rkey];
-  const range = Math.abs(+rValue - +lValue);
-  const multiplier = +lValue > +rValue ? -1 : 1;
+  const lValue = getMapTypeAndValue(mapping[lkey]);
+  const rValue = getMapTypeAndValue(mapping[rkey]);
   const curKeyRange = Math.abs(value - +lkey);
-
   const percentage = curKeyRange / (rkey - lkey);
-  return +lValue + range * percentage * multiplier;
+  // If the value is a color value
+  if (rValue.type === 'color' && lValue.type === 'color') {
+    // TODO: Link the steps here with user settings……
+    const steps = 100;
+    const graColor = gradientColors(lValue.val, rValue.val, steps);
+    const key = (percentage * steps).toFixed(0);
+    return graColor[key];
+  } else {
+    const range = Math.abs(rValue.val - lValue.val);
+    const multiplier = lValue.val > rValue.val ? -1 : 1;
+    return lValue.val + range * percentage * multiplier;
+  }
 };
 
-// 计算当前value在mapping的哪个区间
+// Calculate which range the current value is in the mapping
 const calcKeyFrameRegion = (mapping: Record<string, string>, value: number) => {
   if (Object.keys(mapping).length === 1) {
     return [];
