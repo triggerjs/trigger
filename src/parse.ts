@@ -1,9 +1,9 @@
-import { decimalsLength } from './helpers';
+import { decimalsLength, getValueInRange } from './helpers';
 import { extractValues } from './directives';
 import { getPrefix } from './prefix';
 import { FilterValue } from './directives/tg-filter';
 import { EdgeOptions } from './directives/tg-edge';
-import { TgElement } from './type';
+import { direction, TgElement } from './type';
 import { easePercentage as ease } from './ease';
 
 /**
@@ -19,12 +19,15 @@ export function parseAttributes(element: HTMLElement): TgElement {
   const style = getComputedStyle(actualElement);
   const top = +style.getPropertyValue(`--${prefix}top`);
   const height = +style.getPropertyValue(`--${prefix}height`);
+  const left = +style.getPropertyValue(`--${prefix}left`);
+  const width = +style.getPropertyValue(`--${prefix}width`);
 
   const name: string = extractValues(element, `${prefix}name`);
   const from: number = extractValues(actualElement, `${prefix}from`);
   const to: number = extractValues(actualElement, `${prefix}to`);
   const steps: number = extractValues(actualElement, `${prefix}steps`);
   const step: number = extractValues(actualElement, `${prefix}step`);
+  const direction: direction = extractValues(actualElement, `${prefix}direction`);
   const bezier: string | Array<number> = extractValues(
     actualElement,
     `${prefix}bezier`
@@ -35,9 +38,12 @@ export function parseAttributes(element: HTMLElement): TgElement {
 
   const range = Math.abs(to - from);
   const increment = step === 0 ? range / steps : step;
-  const segments = range / increment;
+  const segments = steps ? steps : range / increment;
   const decimals = decimalsLength(increment);
   const multiplier = from > to ? -1 : 1;
+  // get the size and the position changed according to tg-direction
+  const size = direction === 'vertical' ? height : width;
+  const position = direction === 'vertical' ? top : left;
 
   const mapping: Record<string, string> = extractValues(
     element,
@@ -51,7 +57,12 @@ export function parseAttributes(element: HTMLElement): TgElement {
   return {
     el: element,
     top,
+    left,
     height,
+    width,
+    direction,
+    size,
+    position,
     name,
     from,
     to,
@@ -76,13 +87,12 @@ export function parseAttributes(element: HTMLElement): TgElement {
  * So keep this as light as possible.
  */
 export function parseValues(elements: TgElement[]) {
-  const { scrollTop: scrolled, clientHeight } = document.documentElement;
-
   elements.forEach((element) => {
     const {
       el,
-      top,
-      height,
+      position,
+      size,
+      direction,
       increment,
       segments,
       decimals,
@@ -98,22 +108,17 @@ export function parseValues(elements: TgElement[]) {
       bezier,
     } = element;
 
+    const { scrolled, viewSize } = getViewInfo(direction);
+
     // If the name is equal to '_' (--_), skip
     if (name === '--_') {
       return;
     }
 
     // edge is 'cover' by default
-    let percentage =
-      edge === 'cover'
-        ? Math.min(
-            Math.max(
-              (scrolled + clientHeight - top) / (clientHeight + height),
-              0
-            ),
-            1
-          )
-        : Math.min(Math.max((scrolled - top) / (height - clientHeight), 0), 1);
+    let percentage = edge === 'cover' ? 
+        getValueInRange((scrolled + viewSize - position) / (viewSize + size), 0, 1)
+      : getValueInRange((scrolled - position) / (size - viewSize), 0, 1);
 
     
 
@@ -158,4 +163,21 @@ export function parseValues(elements: TgElement[]) {
       console.log('value', element, value);
     }
   });
+}
+
+/**
+ * get the size and the position of the viewbox according to the direction.
+ */
+function getViewInfo(direction: direction) {
+  if (direction === 'vertical') {
+    return {
+      scrolled: document.documentElement.scrollTop,
+      viewSize: document.documentElement.clientHeight
+    }
+  } else {
+    return {
+      scrolled: document.documentElement.scrollLeft,
+      viewSize: document.documentElement.clientLeft
+    }
+  }
 }

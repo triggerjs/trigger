@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Map</title>
+
+    <script src="../dist/bundle.js" defer></script>
+
+    <style>
+      :root {
+        --opacity: 0.3;
+        font-size: 20px;
+        font-family: "Helvetica Neue", Helvetica;
+      }
+
+      body {
+        background-image: conic-gradient(
+          #0f2257,
+          #1d41a5,
+          #1d3782,
+          #90f1fe,
+          #1145c1,
+          #06153e,
+          #06153e
+        );
+        background-size: cover;
+        background-attachment: fixed;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      div {
+        margin: 100vh 0;
+        font-size: 3.4rem;
+        font-weight: 600;
+        letter-spacing: -1.2px;
+        color: #fff;
+        line-height: 1.22em;
+        width: 800px;
+      }
+
+      span {
+        --opacity: 0.3;
+        opacity: var(--opacity);
+      }
+
+      .pro {
+        display: block;
+        margin-top: 2.2rem;
+      }
+    </style>
+  </head>
+  <body>
+<!-- This is an example of using Trigger.js, checkout at https://github.com/triggerjs/trigger -->
+  <div tg-name="a" tg-ref="container" tg-from="1" tg-to="10" tg-step="1">
+    <section tg-name="a" tg-map="1,2,3,4,5,6,7,8,9,10: 1">
+      <span tg-name="opacity" tg-filter="2!" tg-follow="container">A dramatically more powerful camera system.</span>
+      <span tg-name="opacity" tg-filter="3!" tg-follow="container">A display so responsive, every interaction feels new again.</span>
+      <span tg-name="opacity" tg-filter="4!" tg-follow="container">The world’s fastest smartphone chip.</span>
+      <span tg-name="opacity" tg-filter="5!" tg-follow="container">Exceptional durability.</span>
+      <span tg-name="opacity" tg-filter="6!" tg-follow="container">And a huge leap in battery life.</span>
+      <span tg-name="opacity" tg-filter="6,7" tg-map="6: 0.3; 7: 1" tg-follow="container" class="pro">Let’s Pro.</span>
+    </section>
+  </div>
+  </body>
+</html>
