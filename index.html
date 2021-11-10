@@ -23,7 +23,7 @@
       }
 
       .container {
-        height: 300vh;
+        width: 300vh;
       }
 
       .sticky {
@@ -33,7 +33,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
+        min-width: 100vh;
         position: sticky;
         top: 0;
         font-size: calc(var(--size) * 1em);
@@ -50,6 +50,7 @@
       class="container"
       tg-name="size"
       tg-edge="inset"
+      tg-direction="horizon"
       tg-from="14"
       tg-to="20"
       tg-bezier="0.23, 1.5, 0.32, 2"

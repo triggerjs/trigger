@@ -17,10 +17,12 @@ export default function (
   document
     .querySelectorAll<HTMLElement>(`[${prefix}name]`)
     .forEach((element) => {
-      const { top, height } = element.getBoundingClientRect();
+      const { top, height, left, width } = element.getBoundingClientRect();
 
       element.style.setProperty(`--${prefix}top`, `${top + window.scrollY}`);
+      element.style.setProperty(`--${prefix}left`, `${left + window.scrollX}`);
       element.style.setProperty(`--${prefix}height`, `${height}`);
+      element.style.setProperty(`--${prefix}width`, `${width}`);
 
       observer && observer.observe(element);
     });
