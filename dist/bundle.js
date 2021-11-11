@@ -1,5 +1,5 @@
 /*!
- * Trigger.js v1.0.7
+ * Trigger.js v1.0.8
  * Copyright (c) 2021 Steven Lei
  * Released under the MIT License.
 */
