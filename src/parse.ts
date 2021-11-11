@@ -1,10 +1,10 @@
-import { decimalsLength, getValueInRange } from './helpers';
+import { decimalsLength } from './helpers';
 import { extractValues } from './directives';
 import { getPrefix } from './prefix';
 import { FilterValue } from './directives/tg-filter';
 import { EdgeOptions } from './directives/tg-edge';
 import { direction, TgElement } from './type';
-import { easePercentage as ease } from './ease';
+import { getPercentage, getMappingValue } from './value';
 
 /**
  * This function will be called in observe stage,
@@ -90,50 +90,23 @@ export function parseValues(elements: TgElement[]) {
   elements.forEach((element) => {
     const {
       el,
-      position,
-      size,
-      direction,
-      increment,
-      segments,
-      decimals,
-      multiplier,
       name,
-      from,
       // currently unused
       // to,
       mapping,
       filter,
-      edge,
       lastValue,
-      bezier,
     } = element;
-
-    const { scrolled, viewSize } = getViewInfo(direction);
 
     // If the name is equal to '_' (--_), skip
     if (name === '--_') {
       return;
     }
 
-    // edge is 'cover' by default
-    let percentage = edge === 'cover' ? 
-        getValueInRange((scrolled + viewSize - position) / (viewSize + size), 0, 1)
-      : getValueInRange((scrolled - position) / (size - viewSize), 0, 1);
+    const percentage = getPercentage(element);
+    const mappingValue = getMappingValue(element, percentage);
 
-    
-
-    // Calculation result value of bezier
-    percentage = bezier ? ease(bezier, percentage) : percentage;
-
-    let value: string | number;
-
-    const mappingValue = (
-      from +
-      Math.floor((segments + 1) * percentage) * increment * multiplier
-    ).toFixed(decimals);
-    value = +mappingValue;
-
-    if (filter.values.length > 0 && !filter.values.includes(value)) {
+    if (filter.values.length > 0 && !filter.values.includes(mappingValue)) {
       // If the mode is 'exact', remove the CSS property
       // Setting the lastValue to null to ensure correct comparison below
       if (filter.mode === 'exact') {
@@ -143,12 +116,10 @@ export function parseValues(elements: TgElement[]) {
       return;
     }
 
-    if (typeof mapping[value] !== 'undefined') {
-      value = mapping[value];
-    }
+    const value: string = mapping[mappingValue] ? mapping[mappingValue] : `${mappingValue}`;
 
     if (lastValue != value) {
-      el.style.setProperty(name, `${value}`);
+      el.style.setProperty(name, value);
       el.dispatchEvent(
         new CustomEvent('tg', {
           // @ts-ignore
@@ -165,19 +136,5 @@ export function parseValues(elements: TgElement[]) {
   });
 }
 
-/**
- * get the size and the position of the viewbox according to the direction.
- */
-function getViewInfo(direction: direction) {
-  if (direction === 'vertical') {
-    return {
-      scrolled: document.documentElement.scrollTop,
-      viewSize: document.documentElement.clientHeight
-    }
-  } else {
-    return {
-      scrolled: document.documentElement.scrollLeft,
-      viewSize: document.documentElement.clientLeft
-    }
-  }
-}
+
+
