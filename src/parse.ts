@@ -3,8 +3,8 @@ import { extractValues } from './directives';
 import { getPrefix } from './prefix';
 import { FilterValue } from './directives/tg-filter';
 import { EdgeOptions } from './directives/tg-edge';
-import { TgElement } from './type';
-import { easePercentage as ease } from './ease';
+import { direction, TgElement } from './type';
+import { getPercentage, getMappingValue } from './value';
 
 /**
  * This function will be called in observe stage,
@@ -19,12 +19,15 @@ export function parseAttributes(element: HTMLElement): TgElement {
   const style = getComputedStyle(actualElement);
   const top = +style.getPropertyValue(`--${prefix}top`);
   const height = +style.getPropertyValue(`--${prefix}height`);
+  const left = +style.getPropertyValue(`--${prefix}left`);
+  const width = +style.getPropertyValue(`--${prefix}width`);
 
   const name: string = extractValues(element, `${prefix}name`);
   const from: number = extractValues(actualElement, `${prefix}from`);
   const to: number = extractValues(actualElement, `${prefix}to`);
   const steps: number = extractValues(actualElement, `${prefix}steps`);
   const step: number = extractValues(actualElement, `${prefix}step`);
+  const direction: direction = extractValues(actualElement, `${prefix}direction`);
   const bezier: string | Array<number> = extractValues(
     actualElement,
     `${prefix}bezier`
@@ -35,9 +38,12 @@ export function parseAttributes(element: HTMLElement): TgElement {
 
   const range = Math.abs(to - from);
   const increment = step === 0 ? range / steps : step;
-  const segments = range / increment;
+  const segments = steps ? steps : range / increment;
   const decimals = decimalsLength(increment);
   const multiplier = from > to ? -1 : 1;
+  // get the size and the position changed according to tg-direction
+  const size = direction === 'vertical' ? height : width;
+  const position = direction === 'vertical' ? top : left;
 
   const mapping: Record<string, string> = extractValues(
     element,
@@ -51,7 +57,12 @@ export function parseAttributes(element: HTMLElement): TgElement {
   return {
     el: element,
     top,
+    left,
     height,
+    width,
+    direction,
+    size,
+    position,
     name,
     from,
     to,
@@ -76,26 +87,15 @@ export function parseAttributes(element: HTMLElement): TgElement {
  * So keep this as light as possible.
  */
 export function parseValues(elements: TgElement[]) {
-  const { scrollTop: scrolled, clientHeight } = document.documentElement;
-
   elements.forEach((element) => {
     const {
       el,
-      top,
-      height,
-      increment,
-      segments,
-      decimals,
-      multiplier,
       name,
-      from,
       // currently unused
       // to,
       mapping,
       filter,
-      edge,
       lastValue,
-      bezier,
     } = element;
 
     // If the name is equal to '_' (--_), skip
@@ -103,32 +103,10 @@ export function parseValues(elements: TgElement[]) {
       return;
     }
 
-    // edge is 'cover' by default
-    let percentage =
-      edge === 'cover'
-        ? Math.min(
-            Math.max(
-              (scrolled + clientHeight - top) / (clientHeight + height),
-              0
-            ),
-            1
-          )
-        : Math.min(Math.max((scrolled - top) / (height - clientHeight), 0), 1);
+    const percentage = getPercentage(element);
+    const mappingValue = getMappingValue(element, percentage);
 
-    
-
-    // Calculation result value of bezier
-    percentage = bezier ? ease(bezier, percentage) : percentage;
-
-    let value: string | number;
-
-    const mappingValue = (
-      from +
-      Math.floor((segments + 1) * percentage) * increment * multiplier
-    ).toFixed(decimals);
-    value = +mappingValue;
-
-    if (filter.values.length > 0 && !filter.values.includes(value)) {
+    if (filter.values.length > 0 && !filter.values.includes(mappingValue)) {
       // If the mode is 'exact', remove the CSS property
       // Setting the lastValue to null to ensure correct comparison below
       if (filter.mode === 'exact') {
@@ -138,12 +116,10 @@ export function parseValues(elements: TgElement[]) {
       return;
     }
 
-    if (typeof mapping[value] !== 'undefined') {
-      value = mapping[value];
-    }
+    const value: string = mapping[mappingValue] ? mapping[mappingValue] : `${mappingValue}`;
 
     if (lastValue != value) {
-      el.style.setProperty(name, `${value}`);
+      el.style.setProperty(name, value);
       el.dispatchEvent(
         new CustomEvent('tg', {
           // @ts-ignore
@@ -159,3 +135,6 @@ export function parseValues(elements: TgElement[]) {
     }
   });
 }
+
+
+
