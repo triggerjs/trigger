@@ -12,7 +12,7 @@ import { getPercentage, getMappingValue } from './value';
  */
 export function parseAttributes(element: HTMLElement): TgElement {
   const prefix = getPrefix()
-  const follow: HTMLElement = extractValues(element, `${prefix}follow`);
+  const follow = extractValues<'el'>(element, `${prefix}follow`);
 
   const actualElement = follow || element;
 
@@ -22,19 +22,19 @@ export function parseAttributes(element: HTMLElement): TgElement {
   const left = +style.getPropertyValue(`--${prefix}left`);
   const width = +style.getPropertyValue(`--${prefix}width`);
 
-  const name: string = extractValues(element, `${prefix}name`);
-  const from: number = extractValues(actualElement, `${prefix}from`);
-  const to: number = extractValues(actualElement, `${prefix}to`);
-  const steps: number = extractValues(actualElement, `${prefix}steps`);
-  const step: number = extractValues(actualElement, `${prefix}step`);
-  const direction: direction = extractValues(actualElement, `${prefix}direction`);
-  const bezier: string | Array<number> = extractValues(
+  const name = extractValues<'name'>(element, `${prefix}name`);
+  const from = extractValues<'from'>(actualElement, `${prefix}from`);
+  const to = extractValues<'to'>(actualElement, `${prefix}to`);
+  const steps = extractValues<'steps'>(actualElement, `${prefix}steps`);
+  const step = extractValues<'step'>(actualElement, `${prefix}step`);
+  const direction = extractValues<'direction'>(actualElement, `${prefix}direction`);
+  const bezier = extractValues<'bezier'>(
     actualElement,
     `${prefix}bezier`
   );
 
-  const filter: FilterValue = extractValues(element, `${prefix}filter`);
-  const edge: EdgeOptions = extractValues(actualElement, `${prefix}edge`);
+  const filter = extractValues<'filter'>(element, `${prefix}filter`);
+  const edge = extractValues<'edge'>(actualElement, `${prefix}edge`);
 
   const range = Math.abs(to - from);
   const increment = step === 0 ? range / steps : step;
@@ -45,7 +45,7 @@ export function parseAttributes(element: HTMLElement): TgElement {
   const size = direction === 'vertical' ? height : width;
   const position = direction === 'vertical' ? top : left;
 
-  const mapping: Record<string, string> = extractValues(
+  const mapping: Record<string, string> = extractValues<'mapping'>(
     element,
     `${prefix}map`,
     {
