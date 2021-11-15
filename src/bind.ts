@@ -13,7 +13,7 @@ export default function (
   hook && typeof hook.before === 'function' && hook.before();
 
   // Fetch all DOM elements with [tg-name] attribute and set the current top & left offset
-  const prefix = getPrefix()
+  const prefix = getPrefix();
   document
     .querySelectorAll<HTMLElement>(`[${prefix}name]`)
     .forEach((element) => {
