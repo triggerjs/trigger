@@ -13,7 +13,8 @@
         font-family: Helvetica, sans-serif;
         font-size: 20px;
         --blur: 100;
-        --opacity: 0;
+        --opacity: 1;
+        --color: red;
       }
 
       body {
@@ -35,6 +36,7 @@
         min-height: 100vh;
         position: sticky;
         top: 0;
+        color: var(--color);
         font-size: calc(var(--size) * 1em);
       }
 
@@ -48,11 +50,21 @@
       class="container"
       tg-name="size"
       tg-edge="inset"
-      tg-from="14"
+      tg-from="10"
       tg-to="20"
-      tg-bezier="0.23, 1.5, 0.32, 2"
+      tg-filter="10,15,28@"
+      tg-map="10: 5;15: 28;18: 20"
     >
-      <div class="container" tg-name="opacity" tg-from="0" tg-to="1">
+      <div
+        class="container"
+        tg-name="color"
+        tg-edge="inset"
+        tg-steps="100"
+        tg-from="0"
+        tg-to="10"
+        tg-filter="0,5,10@"
+        tg-map="0: rgb(123, 234, 45);5: #ffd700;10: paleturquoise "
+      >
         <div class="sticky">
           <span>Hello.</span>
         </div>

@@ -1,17 +1,19 @@
-import { decimalsLength } from './helpers';
+import { decimalsLength, getMapTypeAndValue } from './helpers';
 import { extractValues } from './directives';
 import { getPrefix } from './prefix';
 import { FilterValue } from './directives/tg-filter';
 import { EdgeOptions } from './directives/tg-edge';
 import { TgElement } from './type';
 import { easePercentage as ease } from './ease';
+import { gradientColors } from './color';
+import rgbcolor from 'rgb-color';
 
 /**
  * This function will be called in observe stage,
  * caching those values into an object for ease of use in scroll event.
  */
 export function parseAttributes(element: HTMLElement): TgElement {
-  const prefix = getPrefix()
+  const prefix = getPrefix();
   const follow: HTMLElement = extractValues(element, `${prefix}follow`);
 
   const actualElement = follow || element;
@@ -115,8 +117,6 @@ export function parseValues(elements: TgElement[]) {
           )
         : Math.min(Math.max((scrolled - top) / (height - clientHeight), 0), 1);
 
-    
-
     // Calculation result value of bezier
     percentage = bezier ? ease(bezier, percentage) : percentage;
 
@@ -131,11 +131,22 @@ export function parseValues(elements: TgElement[]) {
     if (filter.values.length > 0 && !filter.values.includes(value)) {
       // If the mode is 'exact', remove the CSS property
       // Setting the lastValue to null to ensure correct comparison below
-      if (filter.mode === 'exact') {
-        element.lastValue = null;
-        el.style.removeProperty(name);
+      if (filter.mode === 'smooth') {
+        let region = calcKeyFrameRegion(mapping, value);
+        // console.log(region);
+
+        if (region.length) {
+          value = calcKeyFrameValue(mapping, value, region);
+        } else {
+          return;
+        }
+      } else {
+        if (filter.mode === 'exact') {
+          element.lastValue = null;
+          el.style.removeProperty(name);
+        }
+        return;
       }
-      return;
     }
 
     if (typeof mapping[value] !== 'undefined') {
@@ -155,7 +166,60 @@ export function parseValues(elements: TgElement[]) {
       );
 
       element.lastValue = value;
-      console.log('value', element, value);
     }
   });
 }
+
+// Calculate the result value of the keyframe corresponding to the current value
+const calcKeyFrameValue = (
+  mapping: Record<string, string>,
+  value: number,
+  region: Array<any>
+) => {
+  const [lkey, rkey] = region;
+  const lValue = getMapTypeAndValue(mapping[lkey]);
+  const rValue = getMapTypeAndValue(mapping[rkey]);
+  const curKeyRange = Math.abs(value - +lkey);
+  const percentage = curKeyRange / (rkey - lkey);
+  // If the value is a color value
+  if (rValue.type === 'color' && lValue.type === 'color') {
+    // TODO: Link the steps here with user settings……
+    const steps = 100;
+    const graColor = gradientColors(lValue.val, rValue.val, steps);
+    const key = (percentage * steps).toFixed(0);
+    return graColor[key];
+  } else {
+    const range = Math.abs(rValue.val - lValue.val);
+    const multiplier = lValue.val > rValue.val ? -1 : 1;
+    return lValue.val + range * percentage * multiplier;
+  }
+};
+
+// Calculate which range the current value is in the mapping
+const calcKeyFrameRegion = (mapping: Record<string, string>, value: number) => {
+  if (Object.keys(mapping).length === 1) {
+    return [];
+  } else {
+    let lastKey = '',
+      currentKey = '';
+
+    for (const key of Object.getOwnPropertyNames(mapping).sort((a, b) => {
+      return +a - +b;
+    })) {
+      if (lastKey === null) {
+        lastKey = key;
+        continue;
+      } else {
+        currentKey = key;
+        if (
+          (value >= +lastKey && value <= +currentKey) ||
+          (value >= +currentKey && value <= +lastKey)
+        ) {
+          return [lastKey, currentKey];
+        }
+      }
+      lastKey = key;
+    }
+  }
+  return [];
+};
