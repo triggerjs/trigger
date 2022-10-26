@@ -311,7 +311,7 @@
 
 ## 參與開發
 
-歡迎 Fork 這個 Repo 進行開發，並提交 Pull Requests。在 [GitHub Issues](https://github.com/triggerjs/trigger/issues) 回報 Bug，在 [GitHub Discussions](https://github.com/triggerjs/trigger/discussions) 討論功能／想法／問題。
+歡迎 Fork 這個 Repo 進行開發，並提交 Pull Requests。在 [GitHub Issues](https://github.com/triggerjs/trigger/issues) 汇報 Bug，在 [GitHub Discussions](https://github.com/triggerjs/trigger/discussions) 討論功能／想法／問題。
 
 ## 授權協議
 
