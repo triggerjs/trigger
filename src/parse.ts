@@ -1,4 +1,4 @@
-import { decimalsLength } from './helpers';
+import { decimalsLength, getValueInRange } from './helpers';
 import { extractValues } from './directives';
 import { getPrefix } from './prefix';
 import { FilterValue } from './directives/tg-filter';
@@ -35,7 +35,7 @@ export function parseAttributes(element: HTMLElement): TgElement {
 
   const range = Math.abs(to - from);
   const increment = step === 0 ? range / steps : step;
-  const segments = range / increment;
+  const segments = steps ? steps : range / increment;
   const decimals = decimalsLength(increment);
   const multiplier = from > to ? -1 : 1;
 
@@ -104,16 +104,9 @@ export function parseValues(elements: TgElement[]) {
     }
 
     // edge is 'cover' by default
-    let percentage =
-      edge === 'cover'
-        ? Math.min(
-            Math.max(
-              (scrolled + clientHeight - top) / (clientHeight + height),
-              0
-            ),
-            1
-          )
-        : Math.min(Math.max((scrolled - top) / (height - clientHeight), 0), 1);
+    let percentage = edge === 'cover' ? 
+        getValueInRange((scrolled + clientHeight - top) / (clientHeight + height), 0, 1)
+      : getValueInRange((scrolled - top) / (height - clientHeight), 0, 1);
 
     
 
