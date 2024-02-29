@@ -79,7 +79,6 @@ const Trigger: TriggerType = {
       console.warn(`Unable to initialise, document.body does not exist.`);
       return;
     }
-
     observeElements();
     eventListeners();
   },
